@@ -2,7 +2,7 @@ Package: accelerateR
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
+Author: Wanja Rast
 Maintainer: The package maintainer <yourself@somewhere.net>
 Depends: R (>= 3.5.0), dplyr, MASS, kknn, rpart, randomForest, e1071, lazyeval, abind
 Description: More about what it does (maybe more than one line)
