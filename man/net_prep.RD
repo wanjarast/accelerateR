@@ -17,7 +17,6 @@ net.prep(data =  ... , time = "..." , burst = ...)
   \item{burst}{number of measurments per burst}
 %%     ~~Describe \code{x} here~~
 }
-}
 \details{So far this function only works for 3 dimentional data. Predicting or training a keras neural network was never tested with less than 3 axes.
 
 The axes in the raw data.frame have to be named x, y and z.

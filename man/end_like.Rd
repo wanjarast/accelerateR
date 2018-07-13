@@ -17,7 +17,6 @@ end.prob(data,algorithms,goal)
   \item{goal}{name of the goal column in the prediction results data.frame put in quotes " "}
 %%     ~~Describe \code{x} here~~
 }
-}
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }

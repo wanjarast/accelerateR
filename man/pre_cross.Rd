@@ -13,10 +13,9 @@ pre.cross(pre.frame,Formula)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{pre.frame}{a data.frame containing summary statistics and the known behaviour corresponding to each row of summmary statistics.
-  \item{Formula}{formula by which the algorithms will handle the data(see Details)}
+  \item{pre.frame}{a data.frame containing summary statistics and the known behaviour corresponding to each row of summmary statistics.}
+  \item{Formula}{formula by which the algorithms will handle the data (see Details)}
 %%     ~~Describe \code{x} here~~
-}
 }
 \details{The functionality of this pre.cross() is based on the output of sum.data(). Every row of the summary statistics             data.frame corresponds to one behaviour recording.
 

@@ -17,7 +17,6 @@ move.trans(data =  ... , time = "..." , burst = ...)
   \item{burst}{number of measurments per burst}
 %%     ~~Describe \code{x} here~~
 }
-}
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }

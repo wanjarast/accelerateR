@@ -12,9 +12,8 @@ Majority_vote(x)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{A single line in the output of either pre.cross() or pre.comp()
+  \item{x}{A single line in the output of either pre.cross() or pre.comp()}
 %%     ~~Describe \code{x} here~~
-}
 }
 \details{This function will never be used outside the prediction functions pre.cross() and pre.comp()
 %%  ~~ If necessary, more details than the description above ~~
