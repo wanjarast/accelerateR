@@ -15,6 +15,7 @@
   \item{data}{data.frame of raw acceleration e-obs data exported without subseconds (for necessary format see Details.)}
   \item{time}{column where the timestamps of each burst are stored - cloumn name needs to be put in " "}
   \item{IntDur}{duration of a single burst in seconds(only needed when the weigthed mean should be calculated)}
+  \item{burstcount}{expected number of measurments per burst per axis (needed for Fast Fourier Transformation)}
   \item{x, y, z}{column in which the acceleration measurments for the axis are stored - column name needs to be put in    " "}
   \item{ID}{ID the the focal animal (not needed for calculation)}
   \item{Tag.ID}{ID of the tag (not needed for calculation)}
@@ -55,6 +56,9 @@ The stats argument provides a handle to choose predictors that will be calculate
           "Skewness" for the skewness of x, y and z
 
           "ODBA" for the overall dynamic body acceleration for all 3 axes
+
+          "FFT" for adding the complete fast fourier spectrum to the predictor set
+
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output will be a data.frame with the summary statistics for a single time stamp in one row.

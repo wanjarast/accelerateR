@@ -1,4 +1,4 @@
-sum.data = function(data,IntDur=NA,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,frequency=NA,sex=NA,stats){
+sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,frequency=NA,sex=NA,stats){
   data <- group_by_(data,time)
   burst.timestamp = summarise_(data, meanx = interp(~mean(v),v=as.name(x)))[,1]
   if("mean" %in% stats){
@@ -134,11 +134,29 @@ sum.data = function(data,IntDur=NA,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,frequenc
     ODBA = summarise_(data, ODBA = interp(~sum(abs(v-mean(v)),abs(u-mean(u)),abs(w-mean(w))), .values = list(v=as.name(x),u=as.name(y),w=as.name(z))))[,2]
   }
   else{
-    ODBA=NA
+    ODBA = NA
+  }
+  if("FFT" %in% stats){
+    names_for_data_frame <- c("timestamp" , paste("x",c(1:burstcount) , sep=".") ,
+                              paste("y",c(1:burstcount) ,sep="."),paste("z",c(1:burstcount),sep="."))
+    fastf = function(fragment) {
+      result <- Mod(fft(fragment$X)/length(fragment$X))
+      result2 <- Mod(fft(fragment$Y)/length(fragment$Y))
+      result3 <- Mod(fft(fragment$Z)/length(fragment$Z))
+      results <- c(result,result2,result3)
+      final <- as.data.frame(matrix(results,ncol = length(results)))
+      return(final)
+    }
+    fastFT = data %>%
+      do(fastf(.)) %>%
+      rename_all(funs(c(names_for_data_frame)))
+  }
+  else{
+    fastFT = NA
   }
 
   df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
-                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,ID,Tag.ID,frequency,sex)
+                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT[, -1],ID,Tag.ID,frequency,sex)
   df_clear = df[colSums(!is.na(df)) > 0]
   return(df_clear)
 }
