@@ -1,13 +1,17 @@
 sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,frequency=NA,sex=NA,stats){
   data <- group_by_(data,time)
-  burst.timestamp = summarise_(data, meanx = interp(~mean(v),v=as.name(x)))[,1]
+  names(data)[names(data)==x] <- "x"
+  names(data)[names(data)==y] <- "y"
+  names(data)[names(data)==z] <- "z"
+
+  burst.timestamp = summarise(data, meanx = mean(x))[,1]
   if("mean" %in% stats){
-    meanx = summarise_(data, meanx = interp(~mean(v),v=as.name(x)))[,2]
+    meanx = summarise(data, meanx = mean(x))[,2]
     if(!is.null(y)){
-      meany = summarise_(data, meany = interp(~mean(u),u=as.name(y)))[,2]}
+      meany = summarise(data, meany = mean(y))[,2]}
     else{meany=NA}
     if(!is.null(z)){
-      meanz = summarise_(data, meanz = interp(~mean(w),w=as.name(z)))[,2]}
+      meanz = summarise(data, meanz = mean(z))[,2]}
     else{meanz=NA}
   }
   else{
@@ -16,12 +20,12 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
     meanz=NA
   }
   if("sd" %in% stats){
-    sdx = summarise_(data, sdx = interp(~sd(v),v=as.name(x)))[,2]
+    sdx = summarise(data, sdx = sd(x))[,2]
     if(!is.null(y)){
-      sdy = summarise_(data, sdy = interp(~sd(u),u=as.name(y)))[,2]}
+      sdy = summarise(data, sdy = sd(y))[,2]}
     else(sdy=NA)
     if(!is.null(z)){
-      sdz = summarise_(data, sdz = interp(~sd(w),w=as.name(z)))[,2]}
+      sdz = summarise(data, sdz = sd(z))[,2]}
     else(sdz=NA)
   }
   else{
@@ -39,12 +43,12 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
       wm = weighted.mean(p,psn)
       return(wm)
     }
-    wmx = summarise_(data, wmx = interp(~wmean(v),v=as.name(x)))[,2]
+    wmx = summarise(data, wmx = wmean(x))[,2]
     if(!is.null(y)){
-      wmy = summarise_(data, wmy = interp(~wmean(u),u=as.name(y)))[,2]}
+      wmy = summarise(data, wmy = wmean(y))[,2]}
     else(wmy=NA)
     if(!is.null(z)){
-      wmz = summarise_(data, wmz = interp(~wmean(w),w=as.name(z)))[,2]}
+      wmz = summarise(data, wmz = wmean(z))[,2]}
     else(wmz=NA)
   }
   else{
@@ -57,12 +61,12 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
       result <- var(axis)*(length(axis)-1)/length(axis)
       return(result)
     }
-    Varx = summarise_(data ,varx = interp(~variance(v),v=as.name(x)))[,2]
+    Varx = summarise(data ,varx = variance(x))[,2]
     if(!is.null(y)){
-      Vary = summarise_(data ,vary = interp(~variance(u),u=as.name(y)))[,2]}
+      Vary = summarise(data ,vary = variance(y))[,2]}
     else(Vary=NA)
     if(!is.null(z)){
-      Varz = summarise_(data ,varz = interp(~variance(w),w=as.name(z)))[,2]}
+      Varz = summarise(data ,varz = variance(z))[,2]}
     else(Varz=NA)
   }
   else{
@@ -71,30 +75,30 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
     Varz=NA
   }
   if("q" %in% stats & !is.null(y) & !is.null(z)){
-    dasq = summarise_(data, q = interp(~sqrt(mean(v)^2 + mean(u)^2 + mean(w)^2) , .values = list(v=as.name(x),u=as.name(y),w=as.name(z))))[,2]
+    dasq = summarise(data, q = sqrt(mean(x)^2 + mean(y)^2 + mean(z)^2))[,2]
   }
   else{
     dasq=NA
   }
   if("Pitch" %in% stats & !is.null(y) & !is.null(z)){
-    Pitch = summarise_(data, Pitch = interp(~atan(mean(u)/(sqrt(mean(v)^2+mean(w)^2)))*(180/pi), .values = list(v=as.name(x),u=as.name(y),w=as.name(z))))[,2]
+    Pitch = summarise(data, Pitch = atan(mean(y)/(sqrt(mean(x)^2+mean(z)^2)))*(180/pi))[,2]
   }
   else{
     Pitch=NA
   }
   if("Roll" %in% stats & !is.null(y) & !is.null(z)){
-    Roll = summarise_(data, Roll = interp(~atan(mean(v)/(sqrt(mean(u)^2+mean(w)^2)))*(180/pi), .values = list(v=as.name(x),u=as.name(y),w=as.name(z))))[,2]
+    Roll = summarise(data, Roll = atan(mean(x)/(sqrt(mean(y)^2+mean(z)^2)))*(180/pi))[,2]
   }
   else{
     Roll=NA
   }
   if("ICV" %in% stats){
-    ICVx = summarise_(data, ICVx = interp(~mean(v)/sd(v),v=as.name(x)))[,2]
+    ICVx = summarise(data, ICVx = mean(x)/sd(x))[,2]
     if(!is.null(y)){
-      ICVy = summarise_(data, ICVy = interp(~mean(u)/sd(u),u=as.name(y)))[,2]}
+      ICVy = summarise(data, ICVy = mean(y)/sd(y))[,2]}
     else(ICVy=NA)
     if(!is.null(z)){
-      ICVz = summarise_(data, ICVz = interp(~mean(w)/sd(w),w=as.name(z)))[,2]}
+      ICVz = summarise(data, ICVz = mean(z)/sd(z))[,2]}
     else(ICVz=NA)
   }
   else{
@@ -103,12 +107,12 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
     ICVz=NA
   }
   if("Kurtosis" %in% stats){
-    Kurtosisx = summarise_(data, Kurtosisx = interp(~kurtosis(v),v=as.name(x)))[,2]
+    Kurtosisx = summarise(data, Kurtosisx = kurtosis(x))[,2]
     if(!is.null(y)){
-      Kurtosisy = summarise_(data, Kurtosisy = interp(~kurtosis(u),u=as.name(y)))[,2]}
+      Kurtosisy = summarise(data, Kurtosisy = kurtosis(y))[,2]}
     else(Kurtosisy=NA)
     if(!is.null(z)){
-      Kurtosisz = summarise_(data, Kurtosisz = interp(~kurtosis(w),w=as.name(z)))[,2]}
+      Kurtosisz = summarise(data, Kurtosisz = kurtosis(z))[,2]}
     else(Kurtosisz=NA)
   }
   else{
@@ -117,12 +121,12 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
     Kurtosisz = NA
   }
   if("Skewness" %in% stats){
-    Skewnessx = summarise_(data, Skewnessx = interp(~skewness(v),v=as.name(x)))[,2]
+    Skewnessx = summarise(data, Skewnessx = skewness(x))[,2]
     if(!is.null(y)){
-      Skewnessy = summarise_(data, Skewnessy = interp(~skewness(u),u=as.name(y)))[,2]}
+      Skewnessy = summarise(data, Skewnessy = skewness(y))[,2]}
     else(Skewnessy=NA)
     if(!is.null(z)){
-      Skewnessz = summarise_(data, Skewnessz = interp(~skewness(w),w=as.name(z)))[,2]}
+      Skewnessz = summarise(data, Skewnessz = skewness(z))[,2]}
     else(Skewnessz=NA)
   }
   else{
@@ -131,32 +135,68 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
     Skewnessz = NA
   }
   if("ODBA" %in% stats & !is.null(y) & !is.null(z)){
-    ODBA = summarise_(data, ODBA = interp(~sum(abs(v-mean(v)),abs(u-mean(u)),abs(w-mean(w))), .values = list(v=as.name(x),u=as.name(y),w=as.name(z))))[,2]
+    ODBA = summarise(data, ODBA = sum(abs(x-mean(x)),abs(y-mean(y)),abs(z-mean(z))))[,2]
   }
   else{
     ODBA = NA
   }
   if("FFT" %in% stats){
-    names_for_data_frame <- c("timestamp" , paste("x",c(1:burstcount) , sep=".") ,
-                              paste("y",c(1:burstcount) ,sep="."),paste("z",c(1:burstcount),sep="."))
-    fastf = function(fragment) {
-      result <- Mod(fft(fragment$X)/length(fragment$X))
-      result2 <- Mod(fft(fragment$Y)/length(fragment$Y))
-      result3 <- Mod(fft(fragment$Z)/length(fragment$Z))
-      results <- c(result,result2,result3)
-      final <- as.data.frame(matrix(results,ncol = length(results)))
-      return(final)
+    if(!is.null(y) & !is.null(z)){
+      names_for_data_frame <- c("timestamp" , paste("x",c(1:burstcount) , sep=".") ,
+                                paste("y",c(1:burstcount) ,sep="."),paste("z",c(1:burstcount),sep="."))
+      fastf = function(fragment) {
+        result <- Mod(fft(fragment$x)/length(fragment$x))
+        result2 <- Mod(fft(fragment$y)/length(fragment$y))
+        result3 <- Mod(fft(fragment$z)/length(fragment$z))
+        results <- c(result,result2,result3)
+        final <- as.data.frame(matrix(results,ncol = length(results)))
+        return(final)
+      }
+
+      fastFT = data %>%
+        do(fastf(.)) %>%
+        rename_all(funs(c(names_for_data_frame)))
+      fastFT = fastFT[, -1]
     }
-    fastFT = data %>%
-      do(fastf(.)) %>%
-      rename_all(funs(c(names_for_data_frame)))
+
+    if(is.null(z) & is.null(y)){
+      names_for_data_frame <- c("timestamp" , paste("x",c(1:burstcount) , sep="."))
+
+      fastf = function(fragment) {
+        results <- Mod(fft(fragment$x)/length(fragment$x))
+        final <- as.data.frame(matrix(results,ncol = length(results)))
+        return(final)
+      }
+
+      fastFT = data %>%
+        do(fastf(.)) %>%
+        rename_all(funs(c(names_for_data_frame)))
+      fastFT = fastFT[, -1]
+    }
+
+    if(is.null(z) & !is.null(y)){
+      names_for_data_frame <- c("timestamp" , paste("x",c(1:burstcount) , sep=".") ,
+                                paste("y",c(1:burstcount) ,sep="."))
+      fastf = function(fragment) {
+        result <- Mod(fft(fragment$x)/length(fragment$x))
+        result2 <- Mod(fft(fragment$y)/length(fragment$y))
+        results <- c(result,result2)
+        final <- as.data.frame(matrix(results,ncol = length(results)))
+        return(final)
+      }
+
+      fastFT = data %>%
+        do(fastf(.)) %>%
+        rename_all(funs(c(names_for_data_frame)))
+      fastFT = fastFT[, -1]
+    }
   }
   else{
     fastFT = NA
   }
 
   df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
-                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT[, -1],ID,Tag.ID,frequency,sex)
+                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,frequency,sex)
   df_clear = df[colSums(!is.na(df)) > 0]
   return(df_clear)
 }
