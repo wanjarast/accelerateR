@@ -1,5 +1,5 @@
 sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats){
-  if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
+  if(burstcount == data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
      windowstart == 1){
     data <- group_by_(data,time)
   }
