@@ -1,5 +1,5 @@
 move.trans <- function(data,time="timestamp",burst,naxes=3){
-  if(naxes = 3){
+  if(naxes == 3){
   reorder.acc <- function(rows){
     df <-data.frame(x=rep(NA,nrow(rows)*burst),y=NA,z=NA,taxon_name=NA,tag_id=NA,individual_id=NA,study_name=NA)
     V=matrix(sapply(unlist(strsplit(as.character(rows$eobs.accelerations.raw)," ")),as.numeric),byrow=T,ncol=3)
@@ -16,7 +16,7 @@ move.trans <- function(data,time="timestamp",burst,naxes=3){
     group_by_(time) %>%
     do(reorder.acc(.))
   }
-  if(naxes = 2){
+  if(naxes == 2){
     reorder.acc <- function(rows){
       df <-data.frame(x=rep(NA,nrow(rows)*burst),y=NA,taxon_name=NA,tag_id=NA,individual_id=NA,study_name=NA)
       V=matrix(sapply(unlist(strsplit(as.character(rows$eobs.accelerations.raw)," ")),as.numeric),byrow=T,ncol=2)
@@ -32,7 +32,7 @@ move.trans <- function(data,time="timestamp",burst,naxes=3){
       group_by_(time) %>%
       do(reorder.acc(.))
   }
-  if(naxes = 1){
+  if(naxes == 1){
     reorder.acc <- function(rows){
       df <-data.frame(x=rep(NA,nrow(rows)*burst),taxon_name=NA,tag_id=NA,individual_id=NA,study_name=NA)
       V=matrix(sapply(unlist(strsplit(as.character(rows$eobs.accelerations.raw)," ")),as.numeric),byrow=T,ncol=1)
