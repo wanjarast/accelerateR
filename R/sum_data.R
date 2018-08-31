@@ -1,5 +1,15 @@
-sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,frequency=NA,sex=NA,stats){
-  data <- group_by_(data,time)
+sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats){
+  if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% select(.,2)%>% slice(.,1)-burstcount){
+    warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
+    stop()
+  }
+  if(is.null(burstcount)){
+    data <- group_by_(data,time)
+  }
+  else{
+    data <- group_by_(data,time) %>%
+      slice(. , windowstart:(windowstart + burstcount - 1))
+  }
   names(data)[names(data)==x] <- "x"
   names(data)[names(data)==y] <- "y"
   names(data)[names(data)==z] <- "z"
@@ -196,7 +206,7 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,time,x,y=NULL,z=NULL,ID=NA,
   }
 
   df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
-                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,frequency,sex)
+                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,burstcount,sex)
   df_clear = df[colSums(!is.na(df)) > 0]
   return(df_clear)
 }
