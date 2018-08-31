@@ -1,9 +1,10 @@
 sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats){
-  if(is.null(burstcount)){
+  if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
+     windowstart == 1){
     data <- group_by_(data,time)
   }
   else{
-    if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% select(.,2)%>% slice(.,1)-burstcount){
+    if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1)-burstcount){
       warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
       stop()
     }
