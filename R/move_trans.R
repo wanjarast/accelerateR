@@ -1,5 +1,6 @@
 move.trans <- function(data,time="timestamp",burst,naxes=3){
   names(data) <- gsub(pattern = ":" , replacement = "." , x = names(data))
+  names(data) <- gsub(pattern = "-" , replacement = "." , x = names(data))
   if(naxes == 3){
   reorder.acc <- function(rows){
     df <-data.frame(x=rep(NA,nrow(rows)*burst),y=NA,z=NA,taxon_name=NA,tag_id=NA,individual_id=NA,study_name=NA)
