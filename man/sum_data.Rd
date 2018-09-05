@@ -7,15 +7,17 @@
 \description{Calculate summary statistics from e-obs raw acceleration data. Statistical variables composition can be chosen                at will. Read the Details for the necessary preparetions of the raw data.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
-\usage{sum.data(data = ... , time = "..." , IntDur=NA, x = "..." , y=NULL , z=NULL , ID=NA , Tag.ID=NA , frequency=NA ,
+\usage{sum.data(data = ... , time = "..." , windowstart = 1 , IntDur=NA, x = "..." , y=NULL , z=NULL , ID=NA , Tag.ID=NA , frequency=NA ,
           sex=NA , stats)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{data.frame of raw acceleration e-obs data exported without subseconds (for necessary format see Details.)}
   \item{time}{column where the timestamps of each burst are stored - cloumn name needs to be put in " "}
+  \item{windowstart}{in case a sliding window is used within the bursts this parameter set the start of the window,
+  can be used in a loop to shift the starting value of the window}
   \item{IntDur}{duration of a single burst in seconds(only needed when the weigthed mean should be calculated)}
-  \item{burstcount}{expected number of measurments per burst per axis (needed for Fast Fourier Transformation)}
+  \item{burstcount}{expected number of measurments per burst per axis (needed for Fast Fourier Transformation), also necessary for the sliding window approach to define window length}
   \item{x, y, z}{column in which the acceleration measurments for the axis are stored - column name needs to be put in    " "}
   \item{ID}{ID the the focal animal (not needed for calculation)}
   \item{Tag.ID}{ID of the tag (not needed for calculation)}
@@ -58,6 +60,8 @@ The stats argument provides a handle to choose predictors that will be calculate
           "ODBA" for the overall dynamic body acceleration for all 3 axes
 
           "FFT" for adding the complete fast fourier spectrum to the predictor set
+
+This function can be used for a sliding window approach. For this the function can be put in a loop with the windowstart parameter set to i. The burstcount parameter will set the size of the window. The summary statistics will be calculated seperatly for every window fragment.
 
 %%  ~~ If necessary, more details than the description above ~~
 }
