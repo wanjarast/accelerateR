@@ -1,4 +1,4 @@
-net_prep <- function(data,time,burst){
+net_prep = function(data,time,burst){
 by(data,data[,paste(time)],function(chunklet){
   x <- matrix(chunklet$x,burst,1,byrow = T)
   y <- matrix(chunklet$y,burst,1,byrow = T)
