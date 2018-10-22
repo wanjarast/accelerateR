@@ -1,19 +1,20 @@
 sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats){
-  if(burstcount == data %>% group_by(. , time) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
-     windowstart == 1){
-    data <- group_by_(data,time)
-  }
-  else{
-    if(windowstart > data %>% group_by(. , time) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1)-burstcount){
-      warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
-      stop()
-    }
-    data <- group_by_(data,time) %>%
-      slice(. , windowstart:(windowstart + burstcount - 1))
-  }
+  names(data)[names(data)==time] <- "timestamp"
   names(data)[names(data)==x] <- "x"
   names(data)[names(data)==y] <- "y"
   names(data)[names(data)==z] <- "z"
+  if(burstcount == data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
+     windowstart == 1){
+    data <- group_by_(data,timestamp)
+  }
+  else{
+    if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1)-burstcount){
+      warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
+      stop()
+    }
+    data <- group_by_(data,timestamp) %>%
+      slice(. , windowstart:(windowstart + burstcount - 1))
+  }
 
   burst.timestamp = summarise(data, meanx = mean(x))[,1]
   if("mean" %in% stats){
