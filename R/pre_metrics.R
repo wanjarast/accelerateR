@@ -18,6 +18,10 @@ pre.metrics = function(predicted , expected , uncertain = NULL){
     result[rownames(result) == "recall" , colnames(result) == i] <- correct / colsum
     result[rownames(result) == "precision" , colnames(result) == i] <- correct / rowsum
   }
-
+  if(!(is.null(uncertain))){
   return(list(confusion_matrix = conf.table , metrics = result,uncertain_predictions = others))
+  }
+  if(is.null(uncertain)){
+    return(list(confusion_matrix = conf.table , metrics = result))
+  }
 }
