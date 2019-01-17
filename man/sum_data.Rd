@@ -41,8 +41,6 @@ The stats argument provides a handle to choose predictors that will be calculate
 
           "sd" for the standard deviation of x, y and z
 
-          "Wmean" for a weighted mean of the periodic components of x, y and z (IntDur has to be provided)
-
           "Var" for the variance (1/N) of x, y and z
 
           "ICV" for the inverse coefficient of variation of x, y and z
@@ -59,7 +57,7 @@ The stats argument provides a handle to choose predictors that will be calculate
 
           "ODBA" for the overall dynamic body acceleration for all 3 axes
 
-          "FFT" for adding the complete fast fourier spectrum to the predictor set
+          "FFT" for adding the complete fast fourier spectrum to the predictor set, if this is used a burstcount has to be provided with burstcount = ...
 
 This function can be used for a sliding window approach. For this the function can be put in a loop with the windowstart parameter set to i. The burstcount parameter will set the size of the window. The summary statistics will be calculated seperatly for every window fragment.
 
@@ -75,10 +73,10 @@ This function can be used for a sliding window approach. For this the function c
 \references{
 %% ~put references to the literature/web site here ~
 }
-\author{Wanja Rast, Anne Berger
+\author{Wanja Rast
 %%  ~~who you are~~
 }
-\note{
+\note{The weighted mean was inspired by Anne Berger
 %%  ~~further notes~~
 }
 
@@ -91,8 +89,8 @@ This function can be used for a sliding window approach. For this the function c
 acceleration <- data.frame(time = rep(seq(5),each=20) , x = runif(n = 100,min = 1900,max=2100) ,
 y = runif(n = 100,min = 2100,max=2300) , z = runif(n = 100,min = 1800,max=2000))
 
-sumstats <- sum.data(data=acceleration , time="time" , IntDur=20 , x="x" ,
-y="y" , z="z" , stats=c("mean" , "sd" , "Wmean"))
+sumstats <- sum.data(data=acceleration , time="time" , x="x" ,
+y="y" , z="z" , stats=c("mean" , "sd" , "Var"))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

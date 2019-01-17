@@ -2,17 +2,24 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
 
   names(data)[names(data)==time] <- "timestamp"
 
-  if(burstcount == data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
-     windowstart == 1){
+  if(is.null(burstcount)){
     data <- group_by(data,timestamp)
   }
-  else{
-    if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1)-burstcount){
-      warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
-      stop()
+
+  if(!is.null(burstcount)){
+
+    if(burstcount == data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1) &
+       windowstart == 1){
+      data <- group_by(data,timestamp)
     }
-    data <- group_by(data,timestamp) %>%
-      slice(. , windowstart:(windowstart + burstcount - 1))
+    else{
+      if(windowstart > data %>% group_by(. , timestamp) %>% summarise(n()) %>% dplyr::select(.,2) %>% slice(.,1)-burstcount){
+        warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
+        stop()
+      }
+      data <- group_by(data,timestamp) %>%
+        slice(. , windowstart:(windowstart + burstcount - 1))
+    }
   }
   names(data)[names(data)==x] <- "x"
   names(data)[names(data)==y] <- "y"
@@ -210,7 +217,7 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
   }
 
   df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
-                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,burstcount,sex)
+                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,sex)
   df_clear = df[colSums(!is.na(df)) > 0]
   return(df_clear)
 }
