@@ -47,15 +47,17 @@ pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+predicted <- c(rep("A",7),"B","C","C",rep("B",8),"A","A",rep("C",9),"B")
+expected <- c(rep("A",10),rep("B",10),rep("C",10))
 
-## The function is currently defined as
-function (x)
-{
-  }
-}
+pre.metrics(predicted = predicted , expected = expected)
+
+In case the predictions contain unidentifiable behaviours:
+
+predicted <- c(rep("A",7),"B","C","other",rep("B",8),"A","other",rep("C",9),"B")
+expected <- c(rep("A",10),rep("B",10),rep("C",10))
+
+pre.metrics(predicted = predicted , expected = expected , uncertain = "other")
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")

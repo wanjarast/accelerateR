@@ -16,7 +16,7 @@
   \item{time}{column where the timestamps of each burst are stored - cloumn name needs to be put in " "}
   \item{windowstart}{in case a sliding window is used within the bursts this parameter set the start of the window,
   can be used in a loop to shift the starting value of the window}
-  \item{IntDur}{duration of a single burst in seconds(only needed when the weigthed mean should be calculated)}
+  \item{IntDur}{duration of a single burst in seconds(only needed when the weigthed mean should be calculated (functional but not advised))}
   \item{burstcount}{expected number of measurments per burst per axis (needed for Fast Fourier Transformation), also necessary for the sliding window approach to define window length}
   \item{x, y, z}{column in which the acceleration measurments for the axis are stored - column name needs to be put in    " "}
   \item{ID}{ID the the focal animal (not needed for calculation)}

@@ -1,12 +1,10 @@
 Package: accelerateR
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.1
+Title: Process acceleration data
+Version: 1.0.0
 Author: Wanja Rast
-Maintainer: The package maintainer <yourself@somewhere.net>
-Depends: R (>= 3.5.0), dplyr, MASS, kknn, rpart, randomForest, e1071,abind
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Maintainer: Wanja Rast <wanja.home@t-online.de>
+Depends: R (>= 3.5.0), dplyr, e1071, lubridate
+Description: Calculate summary statistsc for acceleration data to use it in a machine learning framework.
 Encoding: UTF-8
 LazyData: true
