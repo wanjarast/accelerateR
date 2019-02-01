@@ -2,12 +2,12 @@ citHeader("To cite accelerateR in publications use:")
 
 citEntry(entry = "Manual",
   title        = "{accelerateR}: Process acceleration data",
-  author       = personList(as.person("Wanja Rast")),
+  author       = personList(as.person("Rast Wanja")),
   year         = "2019",
   url          = "https://github.com/wanjarast/accelerateR",
 
   textVersion  =
-  paste("Wanja Rast (2019).",
+  paste("Rast, Wanja (2019).",
         "Process acceleration data with accelerateR.",
         "URL https://github.com/wanjarast/accelerateR")
         )
