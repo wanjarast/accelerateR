@@ -3,7 +3,7 @@ Type: Package
 Title: Process acceleration data
 Version: 1.0.0
 Date: 1.2.2019
-Authors@R: person("Rast" , "Wanja" , role = "aut")
+Authors@R: c(person("Rast", "Wanja" , role = "aut"))
 Maintainer: Wanja Rast <wanja.home@t-online.de>
 Depends: R (>= 3.5.0), dplyr, e1071, lubridate
 Description: Calculate summary statistsc for acceleration data to use it in a machine learning framework.
