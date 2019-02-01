@@ -3,7 +3,7 @@
 accelerateR
 ===========
 
-accelerateR offers a framework for acceleration data analysis. It was developed for data recoreded in high sample frequency bursts. The starting point would be accelerationdata that was stored in the [movebank](www.movebank.org). The downloaded data can be transformed with this package to become usable in R which also creates the correct data structure for all functions of accelerateR. The most important function sum.data will calculate summary statistics to prepare the acceleration data to be used for any maschine learning approach.
+accelerateR offers a framework for acceleration data analysis. It was developed for data recoreded in high sample frequency bursts. The starting point would be accelerationdata that was stored in the [movebank](https://www.movebank.org). The downloaded data can be transformed with this package to become usable in R which also creates the correct data structure for all functions of accelerateR. The most important function sum.data will calculate summary statistics to prepare the acceleration data to be used for any maschine learning approach.
 
 Installation
 ------------
@@ -46,7 +46,7 @@ Creates a confusion matrix for a model evaluation. Also provides the precission 
 pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 ```
 
-PLots the absence or present of one or more target behaviours in an actogram style.
+Plots the absence or present of one or more target behaviours in an actogram style.
 
 ``` r
 acto(data = ... , time = "..." , date = "..." , behaviour = "..." , target.bev = ... , daily = FALSE)
