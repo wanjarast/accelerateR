@@ -21,15 +21,15 @@ acto <- function(data , time , date , behaviour , target.bev , daily = FALSE){
       scale_x_discrete(breaks = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
                                   "14:00" , "16:00" , "18:00" , "20:00" , "22:00"), labels = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
                                                                                                "14:00" , "16:00" , "18:00" , "20:00" , "22:00"))+
-      ylab(label = "Datum")+
+      ylab(label = "date")+
       theme(panel.background = element_blank())
 
   }
   else{
-    unique.date <- c(TRUE , rep(NA,length(month(ymd(levels(data$Datum))))-1))
+    unique.date <- c(TRUE , rep(NA,length(lubridate::month(lubridate::ymd(levels(data$Datum))))-1))
 
-    for(i in 2:length(month(ymd(levels(data$Datum))))){
-      unique.date[i] <- !(identical(month(ymd(levels(data$Datum)))[i],month(ymd(levels(data$Datum)))[i-1]))
+    for(i in 2:length(lubridate::month(lubridate::ymd(levels(data$Datum))))){
+      unique.date[i] <- !(identical(lubridate::month(lubridate::ymd(levels(data$Datum)))[i],month(lubridate::ymd(levels(data$Datum)))[i-1]))
     }
 
     ggplot()+
@@ -40,7 +40,7 @@ acto <- function(data , time , date , behaviour , target.bev , daily = FALSE){
       scale_x_discrete(breaks = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
                                   "14:00" , "16:00" , "18:00" , "20:00" , "22:00"), labels = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
                                                                                                "14:00" , "16:00" , "18:00" , "20:00" , "22:00"))+
-      ylab(label = "Datum")+
+      ylab(label = "date")+
       theme(panel.background = element_blank())
   }
 

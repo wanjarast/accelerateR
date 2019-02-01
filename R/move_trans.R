@@ -15,8 +15,8 @@ move.trans <- function(data,time="timestamp",burst,naxes=3){
     return(df)
   }
   output <- data %>%
-    group_by_(time) %>%
-    do(reorder.acc(.))
+    dplyr::group_by_(time) %>%
+    dplyr::do(reorder.acc(.))
   return(output)
   }
   if(naxes == 2){
@@ -32,8 +32,8 @@ move.trans <- function(data,time="timestamp",burst,naxes=3){
       return(df)
     }
     output <- data %>%
-      group_by_(time) %>%
-      do(reorder.acc(.))
+      dplyr::group_by_(time) %>%
+      dplyr::do(reorder.acc(.))
     return(output)
   }
   if(naxes == 1){
@@ -48,8 +48,8 @@ move.trans <- function(data,time="timestamp",burst,naxes=3){
       return(df)
     }
     output <- data %>%
-      group_by_(time) %>%
-      do(reorder.acc(.))
+      dplyr::group_by_(time) %>%
+      dplyr::do(reorder.acc(.))
     return(output)
   }
 }

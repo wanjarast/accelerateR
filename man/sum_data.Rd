@@ -7,8 +7,8 @@
 \description{Calculate summary statistics from e-obs raw acceleration data. Statistical variables composition can be chosen                at will. Read the Details for the necessary preparetions of the raw data.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
-\usage{sum.data(data = ... , time = "..." , windowstart = 1 , IntDur=NA, x = "..." , y=NULL , z=NULL , ID=NA , Tag.ID=NA , frequency=NA ,
-          sex=NA , stats)
+\usage{sum.data(data = ... , time = "..." , windowstart = 1 , burstcount = NULL , x = "..." , y = NULL , z = NULL ,  IntDur = NA , ID = NA , Tag.ID = NA , frequency = NA ,
+          sex = NA , stats)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
