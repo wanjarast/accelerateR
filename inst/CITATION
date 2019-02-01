@@ -9,5 +9,5 @@ citEntry(entry = "Manual",
   textVersion  =
   paste("Rast, Wanja (2019).",
         "Process acceleration data with accelerateR.",
-        "URL https://github.com/wanjarast/accelerateR")
+        "URL: https://github.com/wanjarast/accelerateR")
         )
