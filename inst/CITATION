@@ -1,0 +1,9 @@
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{accelerateR}: Process acceleration data",
+         author = c(person("Rast", "Wanja")),
+         year = year,
+         note = note,
+         url = "https://github.com/wanjarast/accelerateR")
