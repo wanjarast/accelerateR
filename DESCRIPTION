@@ -9,3 +9,5 @@ Depends: R (>= 3.5.0), dplyr, e1071, lubridate
 Description: Calculate summary statistsc for acceleration data to use it in a machine learning framework.
 Encoding: UTF-8
 LazyData: true
+
+Author: Wanja Rast
