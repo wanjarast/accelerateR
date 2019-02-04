@@ -26,4 +26,4 @@
 data(acto.data)
 ## maybe str(acto.data) ; plot(acto.data) ...
 }
-\keyword{datasets}
+

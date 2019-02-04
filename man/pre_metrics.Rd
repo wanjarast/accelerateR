@@ -59,7 +59,4 @@ expected <- c(rep("A",10),rep("B",10),rep("C",10))
 
 pre.metrics(predicted = predicted , expected = expected , uncertain = "other")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+

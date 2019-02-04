@@ -92,7 +92,4 @@ y = runif(n = 100,min = 2100,max=2300) , z = runif(n = 100,min = 1800,max=2000))
 sumstats <- sum.data(data=acceleration , time="time" , x="x" ,
 y="y" , z="z" , stats=c("mean" , "sd" , "Var"))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+
