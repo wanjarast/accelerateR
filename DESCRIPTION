@@ -6,7 +6,7 @@ Date: 2019-02-01
 Authors@R: c(person("Rast", "Wanja" , role = "aut"))
 Maintainer: Wanja Rast <wanja.home@t-online.de>
 Depends: R (>= 3.5.0), dplyr, e1071, lubridate
-Description: Calculate summary statistsc for acceleration data to use it in a machine learning framework.
+Description: Import acceleration data from Movebank, check data integrety and calculate summary statistics.
 Encoding: UTF-8
 LazyData: true
 Author: Wanja Rast
