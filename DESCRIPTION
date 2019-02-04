@@ -10,3 +10,4 @@ Description: Calculate summary statistsc for acceleration data to use it in a ma
 Encoding: UTF-8
 LazyData: true
 Author: Wanja Rast
+RoxygenNote: 6.1.1
