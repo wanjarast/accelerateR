@@ -18,10 +18,10 @@ acto <- function(data , time , date , behaviour , target.bev , daily = FALSE){
       scale_color_manual("Status", values = c("1" = "black" , "0" = "white"))+ #grey92 als Standard Hintergrundfarbe
       theme(legend.position = "none" ,axis.line = element_line(colour = "black", size = 0.5, linetype = "solid"))+
       scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1) , labels = levels(data$Datum))+
-      scale_x_discrete(breaks = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
-                                  "14:00" , "16:00" , "18:00" , "20:00" , "22:00"), labels = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
-                                                                                               "14:00" , "16:00" , "18:00" , "20:00" , "22:00"))+
+      scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
+                       labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
       ylab(label = "date")+
+      xlab(label = "Time of the day")+
       theme(panel.background = element_blank())
 
   }
@@ -37,10 +37,10 @@ acto <- function(data , time , date , behaviour , target.bev , daily = FALSE){
       scale_color_manual("Status", values = c("1" = "black" , "0" = "white"))+ #grey92 als Standard Hintergrundfarbe
       theme(legend.position = "none" ,axis.line = element_line(colour = "black", size = 0.5, linetype = "solid"))+
       scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique.date] , labels = levels(data$Datum)[unique.date])+
-      scale_x_discrete(breaks = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
-                                  "14:00" , "16:00" , "18:00" , "20:00" , "22:00"), labels = c("02:00" , "04:00" , "06:00" , "08:00" , "10:00" , "12:00",
-                                                                                               "14:00" , "16:00" , "18:00" , "20:00" , "22:00"))+
+      scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
+                       labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
       ylab(label = "date")+
+      xlab(label = "Time of the day")+
       theme(panel.background = element_blank())
   }
 
