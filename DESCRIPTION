@@ -5,7 +5,7 @@ Version: 1.0.0
 Date: 2019-02-01
 Authors@R: c(person("Rast", "Wanja" , role = "aut"))
 Maintainer: Wanja Rast <wanja.home@t-online.de>
-Depends: R (>= 3.5.0), dplyr, e1071, lubridate
+Depends: R (>= 3.5.0), dplyr, e1071, lubridate, ggplot2
 Description: Import acceleration data from Movebank, check data integrety and calculate summary statistics.
 Encoding: UTF-8
 LazyData: true
