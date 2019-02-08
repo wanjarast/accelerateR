@@ -1,36 +1,33 @@
-\name{acto}
-\alias{acto}
+\name{acto.odba}
+\alias{acto.odba}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Plot an actogram of a target behaviour
+\title{Plot an actogram based on the ODBA
 %%  ~~function to do ... ~~
 }
-\description{Plots the presents or absence of one or more target behaviours in an actogram style on a daily basis
+\description{Plots the overall activity of the focal animal based on the ODBA at every timestamp. The plot can center around midday or midnight.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE)
+acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{data}{data frame containing the timestamps and the corresponding behaviour}
+  \item{data}{data frame containing timestamps and ODBA values}
   \item{time}{column name of the timestamp in " "
 
   the date format needs to be in year-month-day hour-month-minute}
-  \item{behaviour}{column name of the behaviour
+  \item{ODBA}{colum name of the ODBA values put in " "
 
-  can be numeric, a factor or a character}
-  \item{target.bev}{specify or or more behaviours from the behaviour collumn to display
+  by default this is "ODBA"}
+  \item{cutoff}{set a percentile to cap the highest ODBA value
 
-  for more than one behaviour this needs to be a vector(c())}
-  \item{daily}{set to TRUE if every day should be marked on the y-axis
-
-  by default only the first day of the month is marked on the axis}
+  higher values will be lowered to the set percentile. The default is 1 were nothing is cutoff}
   \item{night.shift}{set to TRUE if the plot shall center around midnight
 
   by default the plot centers around midday}
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+In cases where it is expected to see very high acceleration values du to the animal manipulating the tag directly, it could be considered to cut off the highest ODBA values by setting the cutoff value.
 }
 \value{
 %%  ~Describe the value returned
@@ -51,11 +48,12 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{acto.odba
+\seealso{acto
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 data("acto.data")
 
-acto.odba(data = acto.data , time = "timestamp" , behaviour = "behaviour" , target.bev = c(1))
+acto.odba(data = acto.data , time = "timestamp" , ODBA = "ODBA")
 }
+
