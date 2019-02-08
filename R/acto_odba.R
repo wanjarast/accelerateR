@@ -1,4 +1,4 @@
-acto.odba <- function(data , time , ODBA = "ODBA" , cutoff , night.shift = F){
+acto.odba <- function(data , time , ODBA = "ODBA" , cutoff = 1 , night.shift = F){
   data <- data
   names(data)[names(data) == time] <- "timestamp"
   names(data)[names(data) == ODBA] <- "ODBA"
