@@ -51,3 +51,9 @@ Plots the absence or present of one or more target behaviours in an actogram sty
 ``` r
 acto(data = ... , time = "..." , date = "..." , behaviour = "..." , target.bev = ... , daily = FALSE)
 ```
+
+Plots the Overall dynamic body acceleration (ODBA) in an actogram style.
+
+``` r
+acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE)
+```
