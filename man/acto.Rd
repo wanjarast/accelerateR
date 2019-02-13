@@ -19,7 +19,7 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{behaviour}{column name of the behaviour
 
   can be numeric, a factor or a character}
-  \item{target.bev}{specify or or more behaviours from the behaviour collumn to display
+  \item{target.bev}{specify or or more behaviours from the behaviour column to display
 
   for more than one behaviour this needs to be a vector(c())}
   \item{daily}{set to TRUE if every day should be marked on the y-axis

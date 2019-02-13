@@ -13,7 +13,7 @@
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{data.frame of raw acceleration e-obs data exported without subseconds (for necessary format see Details.)}
-  \item{time}{column where the timestamps of each burst are stored - cloumn name needs to be put in " "}
+  \item{time}{column where the timestamps of each burst are stored - column name needs to be put in " "}
   \item{windowstart}{in case a sliding window is used within the bursts this parameter set the start of the window,
   can be used in a loop to shift the starting value of the window}
   \item{IntDur}{duration of a single burst in seconds(only needed when the weigthed mean should be calculated (functional but not advised))}
