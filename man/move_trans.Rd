@@ -19,7 +19,7 @@ move.trans(data =  ... , time = "..." , acc = "..." , burst = ... , naxes = 3)
   \item{naxes}{number of axes recorded - default is 3 axes}
 %%     ~~Describe \code{x} here~~
 }
-\details{None of the provided column names should have a "-" in the name otherwise the function will not work.
+\details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output will be a data.frame with acceleration data in the same format as produced by the e-obs decoder.

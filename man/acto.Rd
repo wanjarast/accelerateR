@@ -29,7 +29,7 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
 
   by default the plot centers around midday}
 }
-\details{None of the provided column names should have a "-" in the name otherwise the function will not work.
+\details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{

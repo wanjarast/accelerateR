@@ -27,9 +27,7 @@
 
 %%     ~~Describe \code{x} here~~
 }
-\details{None of the provided column names should have a "-" in the name otherwise the function will not work.
-
-This function will prepare the raw data from an e-obs acceleration tag for the use with machine learning. When the data from the tag is extracted from the logger.bin file it has to be in the format without subseconds. Every row of data belonging to the same timestamp need to have the same value in the time column.
+\details{This function will prepare the raw data from an e-obs acceleration tag for the use with machine learning. When the data from the tag is extracted from the logger.bin file it has to be in the format without subseconds. Every row of data belonging to the same timestamp need to have the same value in the time column.
 
 To avoide confuison were data for one time of the day is recorded on several day the columns of the date and time have to be combied in one column. The name of that cloumn has to be specified as the time argument in the function.
 

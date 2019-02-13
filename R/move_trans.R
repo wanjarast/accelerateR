@@ -1,5 +1,6 @@
 move.trans <- function(data,time="timestamp",acc="eobs:accelerations-raw",burst,naxes=3){
   names(data)[names(data) == acc] <- "eobs.accelerations.raw"
+  names(data)[names(data) == time] <- "time"
 
   if(naxes == 3){
   reorder.acc <- function(rows){
