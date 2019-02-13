@@ -8,12 +8,13 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-move.trans(data =  ... , time = "..." , burst = ... , naxes = 3)
+move.trans(data =  ... , time = "..." , acc = "..." , burst = ... , naxes = 3)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{data.frame containing original movebank data}
-  \item{time}{name of the cloumn holding the timestamps - default is "timestamp"}
+  \item{time}{name of the column holding the timestamps - default is "timestamp"}
+  \item{acc}{name of the column holding the name for the raw acc data - default is "eobs.accelerations.raw"}
   \item{burst}{number of measurments per burst}
   \item{naxes}{number of axes recorded - default is 3 axes}
 %%     ~~Describe \code{x} here~~
