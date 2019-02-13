@@ -1,6 +1,6 @@
 move.trans <- function(data,time="timestamp",acc="eobs:accelerations-raw",burst,naxes=3){
   names(data)[names(data) == acc] <- "eobs.accelerations.raw"
-  names(data)[names(data) == time] <- "time"
+  names(data)[names(data) == time] <- "timestamp"
 
   if(naxes == 3){
   reorder.acc <- function(rows){
@@ -13,7 +13,7 @@ move.trans <- function(data,time="timestamp",acc="eobs:accelerations-raw",burst,
     return(df)
   }
   output <- data %>%
-    dplyr::group_by_(time) %>%
+    dplyr::group_by_(timestamp) %>%
     dplyr::do(reorder.acc(.))
   return(output)
   }
@@ -26,7 +26,7 @@ move.trans <- function(data,time="timestamp",acc="eobs:accelerations-raw",burst,
       return(df)
     }
     output <- data %>%
-      dplyr::group_by_(time) %>%
+      dplyr::group_by_(timestamp) %>%
       dplyr::do(reorder.acc(.))
     return(output)
   }
@@ -38,7 +38,7 @@ move.trans <- function(data,time="timestamp",acc="eobs:accelerations-raw",burst,
       return(df)
     }
     output <- data %>%
-      dplyr::group_by_(time) %>%
+      dplyr::group_by_(timestamp) %>%
       dplyr::do(reorder.acc(.))
     return(output)
   }
