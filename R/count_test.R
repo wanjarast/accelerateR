@@ -1,7 +1,8 @@
 count.test <- function(data,burstcount,time="timestamp"){
-  names(data)[names(data) == time] <- "time"
+  names(data)[names(data) == time] <- "timestamp"
+
   df <- data %>%
-    dplyr::group_by_(time) %>%
+    dplyr::group_by(time) %>%
     dplyr::summarise(. , n()==burstcount)
   df_false <- df[df$`n() == burstcount`==FALSE,1]
 
