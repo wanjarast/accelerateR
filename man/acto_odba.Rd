@@ -26,7 +26,8 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
 
   by default the plot centers around midday}
 }
-\details{
+\details{None of the provided column names should have a "-" in the name otherwise the function will not work.
+
 In cases where it is expected to see very high acceleration values du to the animal manipulating the tag directly, it could be considered to cut off the highest ODBA values by setting the cutoff value.
 }
 \value{

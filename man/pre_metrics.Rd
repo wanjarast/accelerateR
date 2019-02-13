@@ -18,7 +18,9 @@ pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 %%     ~~Describe \code{x} here~~
 
 }
-\details{Takes a vector of predicted behaviours and compares it to a vector of known behaviours. A confusion matrix is computed. The recall and precision are computed after Bidder et al. 2014. In cases were unknown behaviours are considered it computes the proportion of unknown behaviours in contrast to the total number of behaviours recoreded.
+\details{None of the provided column names should have a "-" in the name otherwise the function will not work.
+
+Takes a vector of predicted behaviours and compares it to a vector of known behaviours. A confusion matrix is computed. The recall and precision are computed after Bidder et al. 2014. In cases were unknown behaviours are considered it computes the proportion of unknown behaviours in contrast to the total number of behaviours recoreded.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output is a list:

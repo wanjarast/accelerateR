@@ -17,7 +17,9 @@ count_test(data = ... , burstcount = ... , time = "timestamp")
   \item{time}{column name of the column that stores the timestamp. Default is "timestamp".}
 %%     ~~Describe \code{x} here~~
 }
-\details{In some cases there are burst that miss some measurments. This function will check wether all burst have the                expected amount of measurments. The output of this function can be used to filter out faulty burst from the raw            data set.
+\details{None of the provided column names should have a "-" in the name otherwise the function will not work.
+
+In some cases there are burst that miss some measurments. This function will check wether all burst have the                expected amount of measurments. The output of this function can be used to filter out faulty burst from the raw            data set.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output will be a vector with either TRUE or FALSE in every row.
