@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE)
+acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,6 +28,12 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{night.shift}{set to TRUE if the plot shall center around midnight
 
   by default the plot centers around midday}
+  \item{suncolor}{specify the color of the sunset/sunrise lines put in "..." (uses ggplot color codes)
+
+  default is red}
+  \item{timezone}{specify the timezone in "..."
+
+  default is "UTC"}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~

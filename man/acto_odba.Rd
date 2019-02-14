@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE)
+acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,6 +25,15 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
   \item{night.shift}{set to TRUE if the plot shall center around midnight
 
   by default the plot centers around midday}
+  \item{sun}{set to TRUE if sunset and sunrise lines shall be added to the plot
+
+  default is set to FALSE}
+  \item{suncolor}{specify the color of the sunset/sunrise lines put in "..." (uses ggplot color codes)
+
+  default is red}
+  \item{timezone}{specify the timezone in "..."
+
+  default is "UTC"}
 }
 \details{In cases where it is expected to see very high acceleration values du to the animal manipulating the tag directly, it could be considered to cut off the highest ODBA values by setting the cutoff value.
 }
