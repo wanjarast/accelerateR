@@ -34,8 +34,8 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
   \item{timezone}{specify the timezone in "..."
 
   default is "UTC"}
-  \item{long}{Longitude coordinate}
-  \item{lat}{Latitude coordinate}
+  \item{long}{Longitude coordinate - needed for the calculation of the sunset/sunrise}
+  \item{lat}{Latitude coordinate - needed for the calculation of the sunset/sunrise}
 }
 \details{In cases where it is expected to see very high acceleration values du to the animal manipulating the tag directly, it could be considered to cut off the highest ODBA values by setting the cutoff value.
 }

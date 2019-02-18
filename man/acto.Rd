@@ -34,8 +34,8 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{timezone}{specify the timezone in "..."
 
   default is "UTC"}
-  \item{long}{Longitude coordinate}
-  \item{lat}{Latitude coordinate}
+  \item{long}{Longitude coordinate - needed for the calculation of the sunset/sunrise}
+  \item{lat}{Latitude coordinate - needed for the calculation of the sunset/sunrise}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
