@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC")
+acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,6 +34,8 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{timezone}{specify the timezone in "..."
 
   default is "UTC"}
+  \item{long}{Longitude coordinate}
+  \item{lat}{Latitude coordinate}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~

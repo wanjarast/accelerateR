@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC")
+acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,6 +34,8 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
   \item{timezone}{specify the timezone in "..."
 
   default is "UTC"}
+  \item{long}{Longitude coordinate}
+  \item{lat}{Latitude coordinate}
 }
 \details{In cases where it is expected to see very high acceleration values du to the animal manipulating the tag directly, it could be considered to cut off the highest ODBA values by setting the cutoff value.
 }

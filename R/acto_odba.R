@@ -1,4 +1,5 @@
-acto.odba <- function(data , time , ODBA = "ODBA" , cutoff = 1 , night.shift = F , sun = F , suncolor = "red" , timezone = "UTC"){
+acto.odba <- function(data , time , ODBA = "ODBA" , cutoff = 1 , night.shift = F , sun = F , suncolor = "red" ,
+                      timezone = "UTC" , long , lat){
   data <- data
   names(data)[names(data) == time] <- "timestamp"
   names(data)[names(data) == ODBA] <- "ODBA"
@@ -8,12 +9,12 @@ acto.odba <- function(data , time , ODBA = "ODBA" , cutoff = 1 , night.shift = F
   data$Datum <- as.Date(data$timestamp)
 
   if(sun == T){
-    sunrise <- maptools::sunriset(crds = matrix(c(13.31,52.30) , nrow = 1) ,
+    sunrise <- maptools::sunriset(crds = matrix(c(long,lat) , nrow = 1) ,
                                   dateTime = as_datetime(data$timestamp) ,
                                   POSIXct.out = T ,
                                   direction = "sunrise")$time
 
-    sunset <- maptools::sunriset(crds = matrix(c(13.31,52.30) , nrow = 1) ,
+    sunset <- maptools::sunriset(crds = matrix(c(long,lat) , nrow = 1) ,
                                  dateTime = as_datetime(data$timestamp) ,
                                  POSIXct.out = T ,
                                  direction = "sunset")$time
