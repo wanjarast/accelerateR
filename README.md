@@ -49,11 +49,11 @@ pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 Plots the absence or present of one or more target behaviours in an actogram style.
 
 ``` r
-acto(data = ... , time = "..." , date = "..." , behaviour = "..." , target.bev = ... , daily = FALSE)
+acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
 ```
 
 Plots the Overall dynamic body acceleration (ODBA) in an actogram style.
 
 ``` r
-acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE)
+acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
 ```
