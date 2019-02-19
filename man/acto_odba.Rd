@@ -27,7 +27,7 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
   by default the plot centers around midday}
   \item{sun}{set to TRUE if sunset and sunrise lines shall be added to the plot
 
-  default is set to FALSE}
+  default is set to FALSE - see also details}
   \item{suncolor}{specify the color of the sunset/sunrise lines put in "..." (uses ggplot color codes)
 
   default is red}
@@ -38,6 +38,8 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
   \item{lat}{Latitude coordinate - needed for the calculation of the sunset/sunrise}
 }
 \details{In cases where it is expected to see very high acceleration values du to the animal manipulating the tag directly, it could be considered to cut off the highest ODBA values by setting the cutoff value.
+
+This function assumes that the acceleration is sampled with short intervals between recordings. However the times for the sunset and sunrise are reported in a 1 minute resolution. If acceleration measurment intervall are further apart from each other than one minute there will inevetably sunset or sunrise times where no coresponding acceleration data exists. For this reason the sunset/sunrise times will be adjusted to the nearest acceleration measurement time. This could however lead to distorted sun lines if measuring intervals are to far apart.
 }
 \value{
 %%  ~Describe the value returned

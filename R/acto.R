@@ -30,6 +30,30 @@ acto <- function(data , time , behaviour , target.bev , daily = FALSE , night.sh
     if(sun == T){
       data$sunrise <- strftime(sunrise + hours(12), format="%H:%M" , tz = timezone)
       data$sunset <- strftime(sunset + hours(12), format="%H:%M" , tz = timezone)
+
+      #in cases were the sun sets or rises at a time where there are no data for the animal
+      #the sun times are set to the nearest animal time - could break if sample intervals for the animals are far apart
+      sunset.fit <- data$sunset
+      for(i in 1:length(unique(data$sunset))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunset),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunset.fit[sunset.fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunset <- sunset.fit
+
+      sunrise.fit <- data$sunrise
+      for(i in 1:length(unique(data$sunrise))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunrise),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunrise.fit[sunrise.fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunrise <- sunrise.fit
     }
   }
 
@@ -38,6 +62,30 @@ acto <- function(data , time , behaviour , target.bev , daily = FALSE , night.sh
     if(sun == T){
       data$sunrise <- strftime(sunrise, format="%H:%M" , tz = timezone)
       data$sunset <- strftime(sunset, format="%H:%M" , tz = timezone)
+
+      #in cases were the sun sets or rises at a time where there are no data for the animal
+      #the sun times are set to the nearest animal time - could break if sample intervals for the animals are far apart
+      sunset.fit <- data$sunset
+      for(i in 1:length(unique(data$sunset))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunset),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunset.fit[sunset.fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunset <- sunset.fit
+
+      sunrise.fit <- data$sunrise
+      for(i in 1:length(unique(data$sunrise))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunrise),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunrise.fit[sunrise.fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunrise <- sunrise.fit
     }
   }
 

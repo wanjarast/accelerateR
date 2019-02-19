@@ -28,6 +28,9 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{night.shift}{set to TRUE if the plot shall center around midnight
 
   by default the plot centers around midday}
+  \item{sun}{set to TRUE if sunset and sunrise lines shall be added to the plot
+
+  default is set to FALSE - see also details}
   \item{suncolor}{specify the color of the sunset/sunrise lines put in "..." (uses ggplot color codes)
 
   default is red}
@@ -37,7 +40,7 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{long}{Longitude coordinate - needed for the calculation of the sunset/sunrise}
   \item{lat}{Latitude coordinate - needed for the calculation of the sunset/sunrise}
 }
-\details{
+\details{This function assumes that the acceleration is sampled with short intervals between recordings. However the times for the sunset and sunrise are reported in a 1 minute resolution. If acceleration measurment intervall are further apart from each other than one minute there will inevetably sunset or sunrise times where no coresponding acceleration data exists. For this reason the sunset/sunrise times will be adjusted to the nearest acceleration measurement time. This could however lead to distorted sun lines if measuring intervals are to far apart.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
