@@ -1,7 +1,7 @@
 Package: accelerateR
 Type: Package
 Title: Process acceleration data
-Version: 1.1.0
+Version: 1.1.1
 Date: 2019-02-01
 Authors@R: c(person("Rast", "Wanja" , role = "aut"))
 Maintainer: Wanja Rast <wanja.home@t-online.de>
