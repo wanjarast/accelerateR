@@ -1,4 +1,4 @@
-acto.odba <- function(data , time , ODBA = "ODBA" , cutoff = 1 , night.shift = F , sun = F , suncolor = "red" ,
+acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , night.shift = F , sun = F , suncolor = "red" ,
                       timezone = "UTC" , long , lat){
   data <- data
   names(data)[names(data) == time] <- "timestamp"
