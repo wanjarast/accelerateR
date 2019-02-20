@@ -25,6 +25,28 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
     if(sun == T){
       data$sunrise <- strftime(sunrise + hours(12), format="%H:%M" , tz = timezone)
       data$sunset <- strftime(sunset + hours(12), format="%H:%M" , tz = timezone)
+      #match the sun times to timestamps that also exist in the animal data
+      sunset.fit <- data$sunset
+      for(i in 1:length(unique(data$sunset))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunset),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunset.fit[sunset.fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunset <- sunset.fit
+
+      sunrise.fit <- data$sunrise
+      for(i in 1:length(unique(data$sunrise))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunrise),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunrise.fit[sunrise.fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunrise <- sunrise.fit
     }
   }
 
@@ -33,6 +55,29 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
     if(sun == T){
       data$sunrise <- strftime(sunrise, format="%H:%M" , tz = timezone)
       data$sunset <- strftime(sunset, format="%H:%M" , tz = timezone)
+
+      #match the sun times to timestamps that also exist in the animal data
+      sunset.fit <- data$sunset
+      for(i in 1:length(unique(data$sunset))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunset),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunset.fit[sunset.fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunset <- sunset.fit
+
+      sunrise.fit <- data$sunrise
+      for(i in 1:length(unique(data$sunrise))){
+        distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunrise),"00",sep = ":")))[i]-
+                          as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
+
+        sunrise.fit[sunrise.fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+
+      }
+
+      data$sunrise <- sunrise.fit
     }
   }
 
@@ -46,7 +91,8 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
   unique.date <- c(TRUE , rep(NA,length(lubridate::month(lubridate::ymd(levels(data$Datum))))-1))
 
   for(i in 2:length(lubridate::month(lubridate::ymd(levels(data$Datum))))){
-    unique.date[i] <- !(identical(lubridate::month(lubridate::ymd(levels(data$Datum)))[i],month(lubridate::ymd(levels(data$Datum)))[i-1]))
+    unique.date[i] <- !(identical(lubridate::month(lubridate::ymd(levels(data$Datum)))[i],
+                                  lubridate::month(lubridate::ymd(levels(data$Datum)))[i-1]))
   }
 
   if(night.shift == T){
@@ -63,9 +109,9 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
       theme(panel.background = element_blank())
     if(sun == T){
       shift+
-        geom_line(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
+        geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
-        geom_line(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
+        geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
                                                                     color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         scale_color_manual(values = c("sunrise/sunset" = suncolor))
     }
@@ -84,9 +130,9 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
       theme(panel.background = element_blank())
     if(sun == T){
       noshift+
-        geom_line(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
+        geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
-        geom_line(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
+        geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
                                                                     color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         scale_color_manual(values = c("sunrise/sunset" = suncolor))
     }
