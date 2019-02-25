@@ -170,9 +170,9 @@ acto <- function(data , time , behaviour , target.bev , daily = FALSE , night.sh
       basis+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
                          labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
-        geom_line(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
+        geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
-        geom_line(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
+        geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
                                                                     color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         scale_color_manual("Status", values = c("1" = "black" , "0" = "white" , "sunrise/sunset" = suncolor))+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique.date] , labels = levels(data$Datum)[unique.date])
