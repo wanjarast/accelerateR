@@ -113,7 +113,7 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
                                                                     color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
-        scale_color_manual(name = "sun" , values = c("sunrise/sunset" = suncolor))
+        scale_color_manual(name = "" , values = c("sunrise/sunset" = suncolor))
     }
     else{shift}
   }
@@ -134,7 +134,7 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
                                                                     color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
-        scale_color_manual(name = "sun" , values = c("sunrise/sunset" = suncolor))
+        scale_color_manual(name = "" , values = c("sunrise/sunset" = suncolor))
     }
     else(noshift)
   }
