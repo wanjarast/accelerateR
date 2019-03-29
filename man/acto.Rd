@@ -50,7 +50,7 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 }
-\references{
+\references{Sunlines are calculated using the maptools package
 %% ~put references to the literature/web site here ~
 }
 \author{Wanja Rast
