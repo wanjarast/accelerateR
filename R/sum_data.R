@@ -13,7 +13,7 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
       data <- dplyr::group_by(data,timestamp)
     }
     else{
-      if(windowstart > data %>% dplyr::group_by(. , timestamp) %>% dplyr::summarise(dplyr::n()) %>% dplyr::select(.,2) %>% dplyr::slice(.,1)-burstcount){
+      if(windowstart > data %>% dplyr::group_by(. , timestamp) %>% dplyr::summarise(dplyr::n()) %>% dplyr::select(.,2) %>% dplyr::slice(.,1)-burstcount+1){
         warning("Window will run out of bounds of the burst. Reduce the burstcount or window staring row." , call. = F)
         stop()
       }
