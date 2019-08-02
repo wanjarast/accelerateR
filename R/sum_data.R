@@ -102,13 +102,13 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
     dasq=NA
   }
   if("Pitch" %in% stats & !is.null(y) & !is.null(z)){
-    Pitch = dplyr::summarise(data, Pitch = atan(mean(y)/(sqrt(mean(x)^2+mean(z)^2)))*(180/pi))[,2]
+    Pitch = dplyr::summarise(data, Pitch = atan2(mean(y) , (sqrt(mean(x)^2+mean(z)^2)))*(180/pi))[,2]
   }
   else{
     Pitch=NA
   }
   if("Roll" %in% stats & !is.null(y) & !is.null(z)){
-    Roll = dplyr::summarise(data, Roll = atan(mean(x)/(sqrt(mean(y)^2+mean(z)^2)))*(180/pi))[,2]
+    Roll = dplyr::summarise(data, Roll = atan2(mean(x) , (sqrt(mean(y)^2+mean(z)^2)))*(180/pi))[,2]
   }
   else{
     Roll=NA
