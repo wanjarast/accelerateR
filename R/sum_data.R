@@ -127,6 +127,20 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
     ICVy=NA
     ICVz=NA
   }
+  if("CV" %in% stats){
+    CVx = dplyr::summarise(data, CVx = sd(x)/mean(x))[,2]
+    if(!is.null(y)){
+      CVy = dplyr::summarise(data, CVy = sd(y)/mean(y))[,2]}
+    else(CVy=NA)
+    if(!is.null(z)){
+      CVz = dplyr::summarise(data, CVz = sd(z)/mean(z))[,2]}
+    else(CVz=NA)
+  }
+  else{
+    CVx=NA
+    CVy=NA
+    CVz=NA
+  }
   if("Kurtosis" %in% stats){
     Kurtosisx = dplyr::summarise(data, Kurtosisx = kurtosis(x))[,2]
     if(!is.null(y)){
@@ -216,7 +230,7 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
     fastFT = NA
   }
 
-  df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
+  df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,CVx,CVy,CVz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
                    Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,sex)
   df_clear = df[colSums(!is.na(df)) > 0]
   return(df_clear)

@@ -43,6 +43,8 @@ The stats argument provides a handle to choose predictors that will be calculate
 
           "Var" for the variance (1/N) of x, y and z
 
+          "CV" for the coefficient of variation of x, y and z
+
           "ICV" for the inverse coefficient of variation of x, y and z
 
           "q" for the square root of the sum of squares of x, y and z
