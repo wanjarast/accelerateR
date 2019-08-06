@@ -1,4 +1,4 @@
-sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats){
+sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats,behaviour=NULL){
 
   names(data)[names(data)==time] <- "timestamp"
 
@@ -230,8 +230,19 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
     fastFT = NA
   }
 
+  if(!is.null(behaviour)){
+    names(data)[names(data)==behaviour] <- "bev"
+    bev = dplyr::summarise(data, bev = first(bev))[,2]
+  }
+  else{
+    bev=NA
+  }
+
+
   df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,CVx,CVy,CVz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
-                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,sex)
+                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,sex,bev)
   df_clear = df[colSums(!is.na(df)) > 0]
+  names(df_clear)[names(df_clear)=="bev"] <- behaviour
+
   return(df_clear)
 }

@@ -1,4 +1,4 @@
-count.test <- function(data,burstcount,time="timestamp"){
+count.test <- function(data,burstcount,time="timestamp" , remove = FALSE){
   names(data)[names(data) == time] <- "timestamp"
 
   df <- data %>%
@@ -6,7 +6,17 @@ count.test <- function(data,burstcount,time="timestamp"){
     dplyr::summarise(. , n()==burstcount)
   df_false <- df[df$`n() == burstcount`==FALSE,1]
 
-  if(nrow(df_false)==0){print("No missing values")}
+  if(nrow(df_false)==0){
+    print("No missing values")
+  }
   else{
-    return(df_false)}
+    if(remove == TRUE){
+      output <- data[!ymd_hms(data$timestamp) %in% ymd_hms(df_false$timestamp),]
+      print(paste(nrow(df_false) , "timestamps were removed."))
+      return(output)
+    }
+    else{
+      return(df_false)
+    }
+  }
 }
