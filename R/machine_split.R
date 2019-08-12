@@ -1,4 +1,4 @@
-machine_split2 <- function(data , group , train.size , val.size , seed = 142 , names = c("train.data","val.data","test.data")){
+machine.split <- function(data , group , train.size , val.size , seed = 142 , names = c("train.data","val.data","test.data")){
   set.seed(seed)
   if(train.size + val.size > 1){
     stop("train.size + val.size have to be smaller than 1")
