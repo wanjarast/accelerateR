@@ -6,12 +6,14 @@
 \description{Splits the data into three data sets of custom size. Lable proportions in the original data set will be repsected for all three data sets.
 }
 \usage{
-machine.split(data = predictors , group = "timestamp" , train.size = 0.6 , val.size = 0.2 , names = c("train.data","val.data","test.data"))
+machine.split(data = predictors , group = "timestamp" , behaviour , train.size = 0.6 , val.size = 0.2 , names = c("train.data","val.data","test.data"))
 }
 \arguments{
   \item{data}{Complete data set that will be split in three sub sets
 }
   \item{group}{Variable that identifies data belonging to the same group. Usually timestamp in acc behaviour predictions is the default.
+}
+  \item{behaviour}{Coulmn name with the behaviour labels.
 }
   \item{train.size}{Proportion of data that will create the training data. Default is 0.6.
 }
@@ -25,7 +27,7 @@ This function should be run without saving into an object. The resulting subsets
 All data sets will have exclusive data meaning no data can be in more than one of the created data subsets. For this reason train.size + val.size must not exceed 1.
 }
 \value{
-Outputs three data frames of variable size.
+Outputs three dplyr tibbles of variable size.
 }
 \references{
 %% ~put references to the literature/web site here ~
