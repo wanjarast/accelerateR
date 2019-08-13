@@ -4,16 +4,16 @@ machine.split <- function(data , group = "timestamp" , behaviour , train.size , 
     stop("train.size + val.size have to be smaller than 1")
   }
   data%>%
-    group_by_(. , behaviour , group)%>%
-    nest(.)%>%
-    ungroup(.)%>%
-    group_by_(. , behaviour) -> nested.data
+    dplyr::group_by_(. , behaviour , group)%>%
+    tidyr::nest(.)%>%
+    dplyr::ungroup(.)%>%
+    dplyr::group_by_(. , behaviour) -> nested.data
 
   nested.data%>%
-    sample_frac( . , size = train.size)%>%
-    ungroup(.)%>%
-    slice(. , sample(nrow(.)))%>%
-    unnest(.)-> train.data
+    dplyr::sample_frac( . , size = train.size)%>%
+    dplyr::ungroup(.)%>%
+    dplyr::slice(. , sample(nrow(.)))%>%
+    tidyr::unnest(.)-> train.data
 
   remaining <- nested.data[!nested.data[[group]] %in% train.data[[group]], ]
 
@@ -21,16 +21,16 @@ machine.split <- function(data , group = "timestamp" , behaviour , train.size , 
     (nrow(data) - train.size*nrow(data))
 
   remaining%>%
-    sample_frac( . , size = val.size.calc)%>%
-    ungroup(.)%>%
-    slice(. , sample(nrow(.)))%>%
-    unnest(.)-> val.data
+    dplyr::sample_frac( . , size = val.size.calc)%>%
+    dplyr::ungroup(.)%>%
+    dplyr::slice(. , sample(nrow(.)))%>%
+    tidyr::unnest(.)-> val.data
 
   if(train.size + val.size < 1){
     remaining[!(remaining[[group]] %in% val.data[[group]]), ]%>%
-      ungroup(.)%>%
-      slice(. , sample(nrow(.)))%>%
-      unnest(.)-> test.data
+      dplyr::ungroup(.)%>%
+      dplyr::slice(. , sample(nrow(.)))%>%
+      tidyr::unnest(.)-> test.data
 
     assign(names[3] , test.data , envir = .GlobalEnv)
   }
