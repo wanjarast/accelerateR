@@ -4,7 +4,7 @@
 \title{Compute a confusion matrix recall, precision and the amount of unknown behaviours for a model
 %%  ~~function to do ... ~~
 }
-\description{Convenient function to calculate a confisuion matrix, recall and precision for a maschine learning model
+\description{Convenient function to calculate a confisuion matrix, recall and precision for a machine learning model
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -12,8 +12,8 @@ pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{predicted}{Vector with predicted behaviours from the maschine learning output}
-  \item{expected}{Vector with expected behaviours which are already known}
+  \item{predicted}{Vector with predicted behaviours (output of the prediction from a trained model used on new data)}
+  \item{expected}{Vector with expected behaviours which are already known (e.g. from observation)}
   \item{uncertain}{if the prediction process is designed to put all unceartain predictions in the same class, the class name can be specified here in "..."}
 %%     ~~Describe \code{x} here~~
 
