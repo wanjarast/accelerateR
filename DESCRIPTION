@@ -11,3 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Author: Wanja Rast
 RoxygenNote: 6.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
