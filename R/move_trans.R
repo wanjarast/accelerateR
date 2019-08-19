@@ -1,4 +1,6 @@
-move.trans <- function(data,time="timestamp",acc="eobs:accelerations-raw",burst,naxes=3){
+move.trans <- function(file,time="timestamp",acc="eobs:accelerations-raw",burst,naxes=3){
+
+  data <- data.table::fread(file , header = T)
 
   names(data)[names(data) == acc] <- "eobs.accelerations.raw"
   names(data)[names(data) == time] <- "timestamp"

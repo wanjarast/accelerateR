@@ -21,7 +21,7 @@ bev.import(id , date = NULL , time = NULL , timestamp = NULL , behaviour , round
 }
   \item{rounding}{Rounds the timestamp down to the desired position set in seconds. No rounding when set to 1. The default is 10 which will round the timestamp down to full 10 seconds.
 }
-  \item{time_format}{Date-time format of the originall data. Default is dmy_hms which corresponds to day-month-year_hour:minute:second
+  \item{time_format}{Date-time format of the originall data. Default is dmy_hms which corresponds to day.month.year_hour:minute:second
 }
   \item{match}{Should the imported behaviour data be added to the acceleration data. Default is FALSE.
 }
@@ -30,7 +30,7 @@ bev.import(id , date = NULL , time = NULL , timestamp = NULL , behaviour , round
   \item{data.path}{Data path of the data in case they are not stored in the RStudio project folder. If the data is located in the project folder no path is needed.
 }
 \details{
-This function will only accept csv files. All files of the same individual schould be named in order. Multiple files of the same individual should be indicated with either a number or a letter (capital or small). Excepted formats are "id_behaviour_1.csv" or "id_behaviour_a.csv". In case there is only one behaviour file it should be named "individual_behaviour.csv".
+This function will only accept csv files. All files of the same individual schould be named in order. Multiple files of the same individual should be indicated with either a number or a letter (capital or small). Excepted formats are "<id>_behaviour_1.csv" or "<id>_behaviour_a.csv". In case there is only one behaviour file it should be named "<id>_behaviour.csv".
 All data will be read in in order of the file naming. Timestamp order will have no influence.
 }
 \value{

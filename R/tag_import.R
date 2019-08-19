@@ -1,9 +1,9 @@
 tag.import <- function(tag.id , rounding = 10 , eobs = TRUE , data.path = NULL){
   # read all files from the set tag id
-  pat.data <- paste(tag.id,"_acc[[:graph:]]+.txt", "|" ,tag.id,"_acc+.txt", sep="")
+  pat.data <- paste(tag.id,"_acc[[:graph:]]*.txt" , sep="")
 
   if(!is.null(data.path)){
-    temp.data <- list.files(path = data.path, pattern = pat.data)
+    temp.data <- list.files(path = data.path, pattern = pat.data , full.names = T)
   } else{
     temp.data <- list.files(pattern = pat.data)
   }

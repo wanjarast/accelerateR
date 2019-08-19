@@ -1,6 +1,6 @@
 bev.import <- function(id , date=NULL , time=NULL , timestamp = NULL , behaviour , rounding = 10 , time_format = dmy_hms , match = FALSE , acc.data , data.path = NULL){
   # read all files from the set tag id
-  pat.data <- paste(id,"_behaviour[[:graph:]]+.csv", "|" ,id,"_behaviour+.csv", sep="")
+  pat.data <- paste(id,"_behaviour[[:graph:]]*.csv", sep="")
 
   if(!is.null(data.path)){
     temp.data <- list.files(path = data.path, pattern = pat.data)

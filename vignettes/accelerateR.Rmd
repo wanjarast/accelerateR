@@ -3,17 +3,83 @@ title: "accelerateR"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{accelerateR}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  warning=FALSE,
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+## A user guide to prepare acceleration data for the prediction of behaviour classes
+Wanja Rast
+Version x.x 19th, August 2019
+
+###Scope of this Guide
+The purpose is to show an exemplary workflow going from the raw data to a data set that is ready to be used by any machine learning framework. The functions and their applications will not be explained in full detail in this manual. All functions, however, have detailed descriptions in their ?help pages.
+
+I wrote this guide with acceleration data produced by eobs loggers (e-obs GmbH) in mind. The functions might still work with data from other companies, but that was not tested. 
+
+## 1 Introduction
+Acceleration data was successfuly used in a number of species to predict their behaviour (Nathan et al. 2012, Bidder et al. 2014, Fehlmann et al. 2017). These studies usually include the measurment of acceleration data by animal born loggers and simultanious behaviour observations. Machine learning models are than trained on these data to predict the behaviour of animals that were not observed (Rast et al. 2019). This package is a collection of functions that on one hand provide convenient handling of acceleration data and on the other hand it can provide a standart framework of how to approach this type of study. 
+
+## 2 Installation
+The package can be installed from its github repository. Set the dependencies to TRUE in order to install those as well as accelerateR used a number of other packages.
+```{r , message=FALSE , eval=F}
+require(devtools)
+
+devtools::install_github("wanjarast/accelerateR" , dependencies = T)
+```
+
+## 3 First data import
+You can load the package like any other R package.
+```{r setup , message=FALSE}
 library(accelerateR)
 ```
+
+To access this vignette you can use:
+
+```{r}
+vignette("accelerateR")
+```
+
+### 3.1.1 Using acceleration data exported from the logger.bin
+
+This first step assumes that you have a local copy of the raw acceleration data. All eobs files should be of the "txt" file type. Iin case you got eobs data you can set the eobs agrument to TRUE. This assumes that the file has the default eobs formating. Here it is important that the date format is day-month-year (eobs default) and that the time hase the same value for all measurments of the same burst (select option without miliseconds when processing the logger.bin file). In case you do not have an eobs file set the eobs agrument to FALSE. In this case you have to do all subsequent formating by hand. You can import the txt file into your R session with "tag.import". When you are using an R project and have the txt files in the project folder you there is no need to set a path otherwise set the path to the folder were your files are stored.
+
+```{r}
+data <- tag.import(tag.id = "test" , rounding = 10 , eobs = TRUE , data.path = "C:/Users/rast/Desktop")
+```
+
+### 3.1.2 Using data downloaded from the Movebank
+
+In case you downloaded the acceleration data from the Movebank you can convert them into the same structure as the output from "tag.import" with the "move.trans" function. If the file is in the R project folder you only need to specify the file name in any other case you need to specify the full path. You also need to set the number of measurments taken in each burst with the burst argument. 
+
+```{r}
+
+data2 <- move.trans(file = "C:/Users/rast/Desktop/test_movebank.csv" , burst = 264)
+
+```
+
+###3.2 Check data integrety
+
+In the following I will continue with the data object from the "tag.import". The first step after data import should be a check for data integrety. In some cases there are single measurments missing from some bursts. You can check if this is the case with "count.test". You need to specify how many measurments for each bursts you expect. In case measurments are missing the output of this function is a data.frame that lists all timestamps of bursts that got missing measurments.
+
+```{r}
+count.test(data = data , burstcount = 110)
+```
+
+You can either remove those bursts using the output of "count.test" or set the remove argument of count.test to TRUE. In the latter case the output will be the complete data set without the bursts with missing measurments. There will be an output in the console indicating how many bursts were removed. If you choose this option you can no longer check which timestamps were effected so in case there are a lot of missing measuremnts it would be beneficial to check by hand which bursts are effected.
+
+```{r}
+cleaned.data <- count.test(data = data , burstcount = 110 , remove = TRUE)
+```
+
+### 4 Behaviour data import
+

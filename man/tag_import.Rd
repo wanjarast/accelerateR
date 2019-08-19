@@ -18,7 +18,7 @@ tag_import(tag.id , rounding , eobs = TRUE , data.path = NULL)
 }
 }
 \details{
-This function will only accept txt files. All files of the same individual schould be named in order. Multiple files of the same individual should be indicated with either a number or a letter (capital or small). Excepted formats are "tag.id_acc_1.csv" or "tag.id_acc_a.csv". In case there is only one behaviour file it should be named "tag.id_acc.csv".
+This function will only accept txt files. All files of the same individual schould be named in order. Multiple files of the same individual should be indicated with either a number or a letter (capital or small). Excepted formats are "<tag.id>_acc_1.csv" or "<tag.id>_acc_a.csv". In case there is only one behaviour file it should be named "<tag.id>_acc.csv".
 All data will be read in in order of the file naming. Timestamp order will have no influence.
 }
 \value{
