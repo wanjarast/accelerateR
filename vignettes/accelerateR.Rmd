@@ -51,7 +51,7 @@ vignette("accelerateR")
 
 ### 3.1.1 Using acceleration data exported from the logger.bin
 
-This first step assumes that you have a local copy of the raw acceleration data. All eobs files should be of the "txt" file type. Iin case you got eobs data you can set the eobs agrument to TRUE. This assumes that the file has the default eobs formating. Here it is important that the date format is day-month-year (eobs default) and that the time hase the same value for all measurments of the same burst (select option without miliseconds when processing the logger.bin file). In case you do not have an eobs file set the eobs agrument to FALSE. In this case you have to do all subsequent formating by hand. You can import the txt file into your R session with "tag_import". When you are using an R project and have the txt files in the project folder you there is no need to set a path otherwise set the path to the folder were your files are stored.
+This first step assumes that you have a local copy of the raw acceleration data. All eobs files should be of the "txt" file type. The rounding argument is used to set the seconds in the timestamp to a specific value. In some cases the acceleration measurment does not start on the programmed time but a few seconds later. By setting rounding to 10 all seconds will by rounded down to the closes full 10 second figure, which in most cases should fix all delayed timestamps. You could also round down to the full minute by setting this to 60. Setting it to 1 will result in no rounding. In case you got eobs data you can set the eobs agrument to TRUE. This assumes that the file has the default eobs formating. Here it is important that the date format is day-month-year (eobs default) and that the time hase the same value for all measurments of the same burst (select option without miliseconds when processing the logger.bin file). In case you do not have an eobs file set the eobs agrument to FALSE. In this case you have to do all subsequent formating by hand. You can import the txt file into your R session with "tag_import". When you are using an R project and have the txt files in the project folder you there is no need to set a path otherwise set the path to the folder were your files are stored.
 
 ```{r}
 data <- tag_import(tag_id = "test" , rounding = 10 , eobs = TRUE , data_path = "C:/Users/rast/Desktop")
@@ -85,9 +85,53 @@ cleaned_data <- count_test(data = data , burstcount = 110 , remove = TRUE)
 
 There are many ways the behaviour observation data can be organised. Some might have a file for each day and other might only have one combined file with all observations for a single individual. One issue that has to be considerd is that eobs loggers record the time in the GPS "timezone" which is not in sync with the regular radio clock that you would use during the behavour observation. To synchronise acceleration and behaviour data an additional step is necessary. For this reason I recomend saving daily behaviour observations in one file per day. 
 
-To synchronise acceleration and behaviour data a startegy that worked quite well so far was to calculate the standart deviation for each burst and then look for changes in the observed behaviour. The best indicators are changes from an active behaviour to a passive behaviour or vice versa. Such a change should also be visable in the standart deviation were passive bahviours are usually small and active behaviours hight. The lists of behaviour observations should be changed to match the changes in standart deviation. To calculate the standart deviation the function "sum_data" can be used.
+To synchronise acceleration and behaviour data a startegy that worked quite well so far was to calculate the standart deviation for each burst and then look for changes in the observed behaviour. The best indicators are changes from an active behaviour to a passive behaviour or vice versa. Such a change should also be visable in the standart deviation were passive bahviours are usually small and active behaviours hight. The lists of behaviour observations should be changed to match the changes in standart deviation. To calculate the standart deviation the function "sum_data" can be used. This function will be explained more later. Here we just take the data set we cleaned before, indicate the column names of the timestamp, x, y and z axes and choose only "sd" as to calculate.
 
 ```{r}
-sd_sync <- sum_da
+sd_sync <- sum_data(data = cleaned_data , time = "timestamp" , x = "x" , y = "y" , z = "z" , 
+                    stats = "sd")
+```
+
+The "sd_sync" file can be exported or just from within R. After the behaviour observation files were synchronised with the acceleration data they can be imported into R. there are two options to to this: You can simply read in all behaviour observation files from one individual and combine them into one data.frame using "bev_import". With the "id" agrument you set the individual whose data you want to import. At this stage you are required to name all behaviour files of this individual as follows: <id>_behaviour_<subset-number>.csv. You need to save your files in the csv format. Then specify the columns that store the date and time if those are seperate in your data set or specify the timestamp column when date and time are combined in one column. Also specify the column that stores the bahviour labels. here it should not be necessary to round the timestamp but by setting it to the same value as you did for the "tag_import" function you ensure that both data sets have the exact same timestamps. You lastly need to specify the time format the data is stored in originally. By default this is "day_month_year hour:minute:second" which is passed as the argument dmy_hms. This uses the lubridate syntax for time formats. All other time formats exepted by lubridate are also applicable here.
+
+In case the file are not in the R project folder you need to specify the path to those files.
+
+```{r}
+behaviour <- bev_import(id = "animal" , date = "date" , time = "time" , behaviour = "Bev" ,
+                        rounding = 10 , time_format = dmy_hms , 
+                        data_path = "C:/Users/rast/Desktop")
+```
+
+In case you do not need the behaviour labels in a seperate object you can direcly add them to the acceleration data. Use the same import function and add set the match agrument to true and provide the name of the acceleration data object with acc_data. For this to work properly both acceleration and behaviour data have to have the same timestamps which should be handled by the function itself.
+
+Importing the behaviour data this way will remove the date and time columns from the acceleration data object. Also this will remove all acceleration measurments that do not have a corresponding behaviour label.
+
+```{r}
+complete_raw_data <- bev_import(id = "animal" , date = "date" , time = "time" , 
+                                behaviour = "Bev" , rounding = 10 , time_format = dmy_hms , 
+                                data_path = "C:/Users/rast/Desktop" ,
+                                match = T , acc_data = cleaned_data)
+```
+
+I found that the latter option is the best way to store these data. As they are labeled raw data you can later come back and do a different type of analysis as you did originally which would be quite hard to impossible when you do not have the raw data with labels. So save these as either a csv or rds file.
+
+```{r , eval = F}
+write.csv(complete_raw_data , "complete_raw_data.csv" , row.names = FALSE)
+saveRDS(complete_raw_data , "complete_raw_data.rds")
+```
+
+### 5 Calculating summary statistics
+
+Most commenly behaviour prediction is not performed on raw data. A series of summary statistics is calculated from each burst which are than used as predictors for the machine learning algorithm (Kröschel et al. 2017, Tatler et al. 2018, Rast et al. 2019). You can calculate the summary statistics of your choice with the "sum_data" function. As before when you only calculated the standart devaition you need to provide some information of you raw acceleration data set. With the "stats" agrument you select the summary statistics to calculate. You can find a full list of all available summary statistics in the help file (?sum_data). 
+
+Some problems can occure at this stage: The coeficient of variation, inverse coeficient of variation, skewness and kurtosis (not shown here) include a division by either the mean or standart deviation. In theory the standart deviation can be zero when the animal does absolutly not move. This could be only a rar occurance or typical for the species. in any case dividing by zero is not possible with will lead to errors in the calculation of the coeficient of variation ,skweness and kurtosis. If tehse are single occurances these timestamps could be removed to keep those summary statistics. If, however, this is typical for the study species at hand you could use the coeficient of variation instead of the inverse version (this would only not work if the mean becomes zero). In this case you can not use skweness and kurtosis.
+
+In case your raw acceleration data set has a behvaiour labels you can add them to the summary statistics data set by providing the coulmn name of the behaviour in the original data set.
+
+```{r}
+acc_predcitors <- sum_data(data = complete_raw_data , time = "timestamp" , 
+                           x = "x" , y = "y" , z = "z" ,
+                           stats = c("mean","sd","ICV","Skewness","Pitch","ODBA") , 
+                           behaviour = "Bev")
 ```
 
