@@ -1,5 +1,5 @@
-\name{count.test}
-\alias{count.test}
+\name{count_test}
+\alias{count_test}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Test wether burst are lacking measurements
 %%  ~~function to do ... ~~
@@ -18,7 +18,7 @@ count_test(data = ... , burstcount = ... , time = "timestamp" , remove = FALSE)
   \item{remove}{indicating if the faulty timestamps should be removed from the data set.}
 %%     ~~Describe \code{x} here~~
 }
-\details{In some cases there are burst that miss some measurments. This function will check wether all burst have the                expected amount of measurments. If can either report the faulty timestamps or automaticly remove all data from faulty timestamps.
+\details{In some cases there are burst that miss some measurments. This function will check wether all burst have the expected amount of measurments. If can either report the faulty timestamps or automaticly remove all data from faulty timestamps.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output will be a vector with either TRUE or FALSE in every row.

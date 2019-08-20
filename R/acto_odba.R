@@ -1,4 +1,5 @@
-acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , night.shift = F , sun = F , suncolor = "red" ,
+acto_odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 ,
+                      night_shift = F , sun = F , suncolor = "red" ,
                       timezone = "UTC" , long , lat){
   data <- data
   names(data)[names(data) == time] <- "timestamp"
@@ -20,33 +21,33 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
                                  direction = "sunset")$time
   }
 
-  if(night.shift == T){
+  if(night_shift == T){
     data$Uhrzeit <- strftime(as_datetime(data$timestamp) + hours(12), format="%H:%M" , tz = timezone)
     if(sun == T){
       data$sunrise <- strftime(sunrise + hours(12), format="%H:%M" , tz = timezone)
       data$sunset <- strftime(sunset + hours(12), format="%H:%M" , tz = timezone)
       #match the sun times to timestamps that also exist in the animal data
-      sunset.fit <- data$sunset
+      sunset_fit <- data$sunset
       for(i in 1:length(unique(data$sunset))){
         distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunset),"00",sep = ":")))[i]-
                           as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
 
-        sunset.fit[sunset.fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+        sunset_fit[sunset_fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
 
       }
 
-      data$sunset <- sunset.fit
+      data$sunset <- sunset_fit
 
-      sunrise.fit <- data$sunrise
+      sunrise_fit <- data$sunrise
       for(i in 1:length(unique(data$sunrise))){
         distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunrise),"00",sep = ":")))[i]-
                           as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
 
-        sunrise.fit[sunrise.fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+        sunrise_fit[sunrise_fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
 
       }
 
-      data$sunrise <- sunrise.fit
+      data$sunrise <- sunrise_fit
     }
   }
 
@@ -57,27 +58,27 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
       data$sunset <- strftime(sunset, format="%H:%M" , tz = timezone)
 
       #match the sun times to timestamps that also exist in the animal data
-      sunset.fit <- data$sunset
+      sunset_fit <- data$sunset
       for(i in 1:length(unique(data$sunset))){
         distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunset),"00",sep = ":")))[i]-
                           as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
 
-        sunset.fit[sunset.fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+        sunset_fit[sunset_fit == unique(data$sunset)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
 
       }
 
-      data$sunset <- sunset.fit
+      data$sunset <- sunset_fit
 
-      sunrise.fit <- data$sunrise
+      sunrise_fit <- data$sunrise
       for(i in 1:length(unique(data$sunrise))){
         distance <- abs(as.numeric(hms::as.hms(paste(unique(data$sunrise),"00",sep = ":")))[i]-
                           as.numeric(hms::as.hms(paste(unique(data$Uhrzeit),"00",sep = ":"))))
 
-        sunrise.fit[sunrise.fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
+        sunrise_fit[sunrise_fit == unique(data$sunrise)[i]] <- unique(data$Uhrzeit)[which.min(distance)]
 
       }
 
-      data$sunrise <- sunrise.fit
+      data$sunrise <- sunrise_fit
     }
   }
 
@@ -88,18 +89,18 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
     quantile(x = data$ODBA , probs = cutoff)
 
 
-  unique.date <- c(TRUE , rep(NA,length(lubridate::month(lubridate::ymd(levels(data$Datum))))-1))
+  unique_date <- c(TRUE , rep(NA,length(lubridate::month(lubridate::ymd(levels(data$Datum))))-1))
 
   for(i in 2:length(lubridate::month(lubridate::ymd(levels(data$Datum))))){
-    unique.date[i] <- !(identical(lubridate::month(lubridate::ymd(levels(data$Datum)))[i],
+    unique_date[i] <- !(identical(lubridate::month(lubridate::ymd(levels(data$Datum)))[i],
                                   lubridate::month(lubridate::ymd(levels(data$Datum)))[i-1]))
   }
 
-  if(night.shift == T){
+  if(night_shift == T){
     shift <- ggplot(data = data)+
       geom_tile(aes(x = Uhrzeit , y = date_numeric , fill = ODBA) , size =1)+
       theme(axis.line = element_line(colour = "black", size = 0.5, linetype = "solid"))+
-      scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique.date] , labels = levels(data$Datum)[unique.date])+
+      scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])+
 
       scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
                        labels = c("" , "15:00" , "18:00" , "21:00" , "00:00" , "03:00" , "06:00" , "09:00" , "" ))+
@@ -121,7 +122,7 @@ acto.odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 , n
     noshift <- ggplot(data = data)+
       geom_tile(aes(x = Uhrzeit , y = date_numeric , fill = ODBA) , size =1)+
       theme(axis.line = element_line(colour = "black", size = 0.5, linetype = "solid"))+
-      scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique.date] , labels = levels(data$Datum)[unique.date])+
+      scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])+
       scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
                        labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
       scale_fill_gradient(low = "white", high = "black")+

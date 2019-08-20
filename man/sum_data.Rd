@@ -7,7 +7,7 @@
 \description{Calculate summary statistics from e-obs raw acceleration data. Statistical variables composition can be chosen                at will. Read the Details for the necessary preparetions of the raw data.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
-\usage{sum.data(data = ... , time = "..." , windowstart = 1 , burstcount = NULL , x = "..." , y = NULL , z = NULL ,  IntDur = NA , ID = NA , Tag.ID = NA , frequency = NA ,
+\usage{sum.data(data = ... , time = "..." , windowstart = 1 , burstcount = NULL , x = "..." , y = NULL , z = NULL ,  IntDur = NA , ID = NA , Tag_ID = NA , frequency = NA ,
           sex = NA , stats , bev = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -20,7 +20,7 @@
   \item{burstcount}{expected number of measurments per burst per axis (needed for Fast Fourier Transformation), also necessary for the sliding window approach to define window length}
   \item{x, y, z}{column in which the acceleration measurments for the axis are stored - column name needs to be put in    " "}
   \item{ID}{ID the the focal animal (not needed for calculation)}
-  \item{Tag.ID}{ID of the tag (not needed for calculation)}
+  \item{Tag_ID}{ID of the tag (not needed for calculation)}
   \item{frequency}{samples frequency for a single axis in single burst (not needed for calculation)}
   \item{sex}{sex of the focal animal (not needed for calculation)}
   \item{stats}{vector of statiscial variables that should be calculated (for possible input see Details)}

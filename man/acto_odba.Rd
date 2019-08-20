@@ -1,5 +1,5 @@
-\name{acto.odba}
-\alias{acto.odba}
+\name{acto_odba}
+\alias{acto_odba}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Plot an actogram based on the ODBA
 %%  ~~function to do ... ~~
@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
+acto_odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night_shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +22,7 @@ acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift =
   \item{cutoff}{set a percentile to cap the highest ODBA value
 
   higher values will be lowered to the set percentile. The default is 1 were nothing is cutoff}
-  \item{night.shift}{set to TRUE if the plot shall center around midnight
+  \item{night_shift}{set to TRUE if the plot shall center around midnight
 
   by default the plot centers around midday}
   \item{sun}{set to TRUE if sunset and sunrise lines shall be added to the plot
@@ -66,6 +66,6 @@ The sun times are calculated on a minute scale, so sunset or sunrise can happen 
 \examples{
 data("acto.data")
 
-acto.odba(data = acto.data , time = "timestamp" , ODBA = "ODBA")
+acto_odba(data = acto.data , time = "timestamp" , ODBA = "ODBA")
 }
 

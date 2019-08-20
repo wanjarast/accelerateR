@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
+acto(data = ... , time = "..." , behaviour = "..." , target_bev = ... , daily = FALSE , night_shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,13 +19,13 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
   \item{behaviour}{column name of the behaviour
 
   can be numeric, a factor or a character}
-  \item{target.bev}{specify or or more behaviours from the behaviour column to display
+  \item{target_bev}{specify or or more behaviours from the behaviour column to display
 
   for more than one behaviour this needs to be a vector(c())}
   \item{daily}{set to TRUE if every day should be marked on the y-axis
 
   by default only the first day of the month is marked on the axis}
-  \item{night.shift}{set to TRUE if the plot shall center around midnight
+  \item{night_shift}{set to TRUE if the plot shall center around midnight
 
   by default the plot centers around midday}
   \item{sun}{set to TRUE if sunset and sunrise lines shall be added to the plot
@@ -68,5 +68,5 @@ acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = 
 \examples{
 data("acto.data")
 
-acto.odba(data = acto.data , time = "timestamp" , behaviour = "behaviour" , target.bev = c(1))
+acto.odba(data = acto.data , time = "timestamp" , behaviour = "behaviour" , target_bev = c(1))
 }

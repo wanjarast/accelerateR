@@ -1,40 +1,41 @@
-machine.split <- function(data , group = "timestamp" , behaviour , train.size , val.size , seed = 142 , names = c("train.data","val.data","test.data")){
+machine_split <- function(data , group = "timestamp" , behaviour , train_size , val_size ,
+                          seed = 142 , names = c("train_data","val_data","test_data")){
   set.seed(seed)
-  if(train.size + val.size > 1){
-    stop("train.size + val.size have to be smaller than 1")
+  if(train_size + val_size > 1){
+    stop("train_size + val_size have to be smaller than 1")
   }
-  data%>%
+  nested_data <- data%>%
     dplyr::group_by_(. , behaviour , group)%>%
     tidyr::nest(.)%>%
     dplyr::ungroup(.)%>%
-    dplyr::group_by_(. , behaviour) -> nested.data
+    dplyr::group_by_(. , behaviour)
 
-  nested.data%>%
-    dplyr::sample_frac( . , size = train.size)%>%
+  train_data <- nested_data%>%
+    dplyr::sample_frac( . , size = train_size)%>%
     dplyr::ungroup(.)%>%
     dplyr::slice(. , sample(nrow(.)))%>%
-    tidyr::unnest(.)-> train.data
+    tidyr::unnest(.)
 
-  remaining <- nested.data[!nested.data[[group]] %in% train.data[[group]], ]
+  remaining <- nested_data[!nested_data[[group]] %in% train_data[[group]], ]
 
-  val.size.calc <- (nrow(data) * val.size) /
-    (nrow(data) - train.size*nrow(data))
+  val_size_calc <- (nrow(data) * val_size) /
+    (nrow(data) - train_size*nrow(data))
 
-  remaining%>%
-    dplyr::sample_frac( . , size = val.size.calc)%>%
+  val_data <- remaining%>%
+    dplyr::sample_frac( . , size = val_size_calc)%>%
     dplyr::ungroup(.)%>%
     dplyr::slice(. , sample(nrow(.)))%>%
-    tidyr::unnest(.)-> val.data
+    tidyr::unnest(.)
 
-  if(train.size + val.size < 1){
-    remaining[!(remaining[[group]] %in% val.data[[group]]), ]%>%
+  if(train_size + val_size < 1){
+    test_data <- remaining[!(remaining[[group]] %in% val_data[[group]]), ]%>%
       dplyr::ungroup(.)%>%
       dplyr::slice(. , sample(nrow(.)))%>%
-      tidyr::unnest(.)-> test.data
+      tidyr::unnest(.)
 
-    assign(names[3] , test.data , envir = .GlobalEnv)
+    assign(names[3] , test_data , envir = .GlobalEnv)
   }
 
-  assign(names[1] , train.data , envir = .GlobalEnv)
-  assign(names[2] , val.data , envir = .GlobalEnv)
+  assign(names[1] , train_data , envir = .GlobalEnv)
+  assign(names[2] , val_data , envir = .GlobalEnv)
 }

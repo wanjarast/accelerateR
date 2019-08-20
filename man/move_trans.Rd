@@ -1,5 +1,5 @@
-\name{move.trans}
-\alias{move.trans}
+\name{move_trans}
+\alias{move_trans}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Movebank transformation
 %%  ~~function to do ... ~~
@@ -8,13 +8,13 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-move.trans(file =  ... , time = "..." , acc = "..." , burst = ... , naxes = 3)
+move_trans(file =  ... , time = "timestamp" , acc = "eobs:accelerations-raw" , burst = ... , naxes = 3)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{file}{file path to the downloaded csv file}
   \item{time}{name of the column holding the timestamps - default is "timestamp"}
-  \item{acc}{name of the column holding the name for the raw acc data - default is "eobs.accelerations.raw"}
+  \item{acc}{name of the column holding the name for the raw acc data - default is "eobs:accelerations-raw"}
   \item{burst}{number of measurments per burst}
   \item{naxes}{number of axes recorded - default is 3 axes}
 %%     ~~Describe \code{x} here~~

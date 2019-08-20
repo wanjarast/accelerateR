@@ -1,12 +1,13 @@
-\name{bev.import}
-\alias{bev.import}
+\name{bev_import}
+\alias{bev_import}
 \title{Import multiple behaviour observation files
 }
 \description{
 Import the behaviour and corresponding timestamps from multiple files of the same individual. Can also add the behaviour lables to the raw acceleration data.
 }
 \usage{
-bev.import(id , date = NULL , time = NULL , timestamp = NULL , behaviour , rounding = 10 , time_format = dmy_hms , match = FALSE , acc.data , data.path = NULL)
+bev_import(id , date = NULL , time = NULL , timestamp = NULL , behaviour , rounding = 10 ,
+time_format = dmy_hms , match = FALSE , acc_data , data_path = NULL)
 }
 \arguments{
   \item{id}{ID of the individual that is read in.
@@ -25,9 +26,9 @@ bev.import(id , date = NULL , time = NULL , timestamp = NULL , behaviour , round
 }
   \item{match}{Should the imported behaviour data be added to the acceleration data. Default is FALSE.
 }
-  \item{acc.data}{In case match is TRUE this names the acceleration data frame to which the behaviour data should be added.
+  \item{acc_data}{In case match is TRUE this names the acceleration data frame to which the behaviour data should be added.
 }
-  \item{data.path}{Data path of the data in case they are not stored in the RStudio project folder. If the data is located in the project folder no path is needed.
+  \item{data_path}{Data path of the data in case they are not stored in the RStudio project folder. If the data is located in the project folder no path is needed.
 }
 \details{
 This function will only accept csv files. All files of the same individual schould be named in order. Multiple files of the same individual should be indicated with either a number or a letter (capital or small). Excepted formats are "<id>_behaviour_1.csv" or "<id>_behaviour_a.csv". In case there is only one behaviour file it should be named "<id>_behaviour.csv".
@@ -54,6 +55,6 @@ tag.import
 \examples{
 ##---- NOT RUN !! ----
 
-data <- bev.import(id = "tag6566" , date = "date" , time = "time" , behaviour = "bev" ,
-                    rounding = 10 , match = T , acc.data = raw.data , time_format = dmy_hms)
+data <- bev_import(id = "tag6566" , date = "date" , time = "time" , behaviour = "bev" ,
+                    rounding = 10 , match = T , acc_data = raw_data , time_format = dmy_hms)
 }

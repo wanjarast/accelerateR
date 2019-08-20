@@ -1,4 +1,4 @@
-count.test <- function(data,burstcount,time="timestamp" , remove = FALSE){
+count_test <- function(data,burstcount,time="timestamp" , remove = FALSE){
   names(data)[names(data) == time] <- "timestamp"
 
   df <- data %>%
@@ -12,7 +12,7 @@ count.test <- function(data,burstcount,time="timestamp" , remove = FALSE){
   else{
     if(remove == TRUE){
       output <- data[!ymd_hms(data$timestamp) %in% ymd_hms(df_false$timestamp),]
-      print(paste(nrow(df_false) , "timestamps were removed."))
+      cat(paste(nrow(df_false) , "timestamps were removed."))
       return(output)
     }
     else{

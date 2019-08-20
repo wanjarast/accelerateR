@@ -1,4 +1,4 @@
-sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,Tag.ID=NA,sex=NA,stats,behaviour=NULL){
+sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,TAG_ID=NA,sex=NA,stats,behaviour=NULL){
 
   names(data)[names(data)==time] <- "timestamp"
 
@@ -25,7 +25,7 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
   names(data)[names(data)==y] <- "y"
   names(data)[names(data)==z] <- "z"
 
-  burst.timestamp = dplyr::summarise(data, meanx = mean(x))[,1]
+  burst_timestamp = dplyr::summarise(data, meanx = mean(x))[,1]
   if("mean" %in% stats){
     meanx = dplyr::summarise(data, meanx = mean(x))[,2]
     if(!is.null(y)){
@@ -239,8 +239,8 @@ sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL
   }
 
 
-  df <- data.frame(burst.timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,CVx,CVy,CVz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
-                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,Tag.ID,sex,bev)
+  df <- data.frame(burst_timestamp,meanx,meany,meanz,sdx,sdy,sdz,Varx,Vary,Varz,wmx,wmy,wmz,CVx,CVy,CVz,ICVx,ICVy,ICVz,dasq,Kurtosisx,
+                   Kurtosisy,Kurtosisz,Skewnessx,Skewnessy,Skewnessz,Pitch,Roll,ODBA,fastFT,ID,TAG_ID,sex,bev)
   df_clear = df[colSums(!is.na(df)) > 0]
   names(df_clear)[names(df_clear)=="bev"] <- behaviour
 

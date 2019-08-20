@@ -1,5 +1,5 @@
-\name{pre.metrics}
-\alias{pre.metrics}
+\name{pre_metrics}
+\alias{pre_metrics}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Compute a confusion matrix recall, precision and the amount of unknown behaviours for a model
 %%  ~~function to do ... ~~
@@ -52,13 +52,13 @@ Takes a vector of predicted behaviours and compares it to a vector of known beha
 predicted <- c(rep("A",7),"B","C","C",rep("B",8),"A","A",rep("C",9),"B")
 expected <- c(rep("A",10),rep("B",10),rep("C",10))
 
-pre.metrics(predicted = predicted , expected = expected)
+pre_metrics(predicted = predicted , expected = expected)
 
 In case the predictions contain unidentifiable behaviours:
 
 predicted <- c(rep("A",7),"B","C","other",rep("B",8),"A","other",rep("C",9),"B")
 expected <- c(rep("A",10),rep("B",10),rep("C",10))
 
-pre.metrics(predicted = predicted , expected = expected , uncertain = "other")
+pre_metrics(predicted = predicted , expected = expected , uncertain = "other")
 }
 
