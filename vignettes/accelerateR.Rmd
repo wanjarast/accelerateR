@@ -51,10 +51,10 @@ vignette("accelerateR")
 
 ### 3.1.1 Using acceleration data exported from the logger.bin
 
-This first step assumes that you have a local copy of the raw acceleration data. All eobs files should be of the "txt" file type. Iin case you got eobs data you can set the eobs agrument to TRUE. This assumes that the file has the default eobs formating. Here it is important that the date format is day-month-year (eobs default) and that the time hase the same value for all measurments of the same burst (select option without miliseconds when processing the logger.bin file). In case you do not have an eobs file set the eobs agrument to FALSE. In this case you have to do all subsequent formating by hand. You can import the txt file into your R session with "tag.import". When you are using an R project and have the txt files in the project folder you there is no need to set a path otherwise set the path to the folder were your files are stored.
+This first step assumes that you have a local copy of the raw acceleration data. All eobs files should be of the "txt" file type. Iin case you got eobs data you can set the eobs agrument to TRUE. This assumes that the file has the default eobs formating. Here it is important that the date format is day-month-year (eobs default) and that the time hase the same value for all measurments of the same burst (select option without miliseconds when processing the logger.bin file). In case you do not have an eobs file set the eobs agrument to FALSE. In this case you have to do all subsequent formating by hand. You can import the txt file into your R session with "tag_import". When you are using an R project and have the txt files in the project folder you there is no need to set a path otherwise set the path to the folder were your files are stored.
 
 ```{r}
-data <- tag.import(tag.id = "test" , rounding = 10 , eobs = TRUE , data.path = "C:/Users/rast/Desktop")
+data <- tag_import(tag_id = "test" , rounding = 10 , eobs = TRUE , data_path = "C:/Users/rast/Desktop")
 ```
 
 ### 3.1.2 Using data downloaded from the Movebank
