@@ -1,4 +1,4 @@
-sum.data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,TAG_ID=NA,sex=NA,stats,behaviour=NULL){
+sum_data = function(data,IntDur=NULL,burstcount=NULL,windowstart=1,time,x,y=NULL,z=NULL,ID=NA,TAG_ID=NA,sex=NA,stats,behaviour=NULL){
 
   names(data)[names(data)==time] <- "timestamp"
 

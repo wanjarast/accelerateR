@@ -59,27 +59,35 @@ data <- tag_import(tag_id = "test" , rounding = 10 , eobs = TRUE , data_path = "
 
 ### 3.1.2 Using data downloaded from the Movebank
 
-In case you downloaded the acceleration data from the Movebank you can convert them into the same structure as the output from "tag.import" with the "move.trans" function. If the file is in the R project folder you only need to specify the file name in any other case you need to specify the full path. You also need to set the number of measurments taken in each burst with the burst argument. 
+In case you downloaded the acceleration data from the Movebank you can convert them into the same structure as the output from "tag_import" with the "move_trans" function. If the file is in the R project folder you only need to specify the file name in any other case you need to specify the full path. You also need to set the number of measurments taken in each burst with the burst argument. 
 
 ```{r}
 
-data2 <- move.trans(file = "C:/Users/rast/Desktop/test_movebank.csv" , burst = 264)
+data2 <- move_trans(file = "C:/Users/rast/Desktop/test_movebank.csv" , burst = 264)
 
 ```
 
 ###3.2 Check data integrety
 
-In the following I will continue with the data object from the "tag.import". The first step after data import should be a check for data integrety. In some cases there are single measurments missing from some bursts. You can check if this is the case with "count.test". You need to specify how many measurments for each bursts you expect. In case measurments are missing the output of this function is a data.frame that lists all timestamps of bursts that got missing measurments.
+In the following I will continue with the data object from the "tag_import". The first step after data import should be a check for data integrety. In some cases there are single measurments missing from some bursts. You can check if this is the case with "count_test". You need to specify how many measurments for each bursts you expect. In case measurments are missing the output of this function is a data.frame that lists all timestamps of bursts that got missing measurments.
 
 ```{r}
-count.test(data = data , burstcount = 110)
+count_test(data = data , burstcount = 110)
 ```
 
-You can either remove those bursts using the output of "count.test" or set the remove argument of count.test to TRUE. In the latter case the output will be the complete data set without the bursts with missing measurments. There will be an output in the console indicating how many bursts were removed. If you choose this option you can no longer check which timestamps were effected so in case there are a lot of missing measuremnts it would be beneficial to check by hand which bursts are effected.
+You can either remove those bursts using the output of "count_test" or set the remove argument of count_test to TRUE. In the latter case the output will be the complete data set without the bursts with missing measurments. There will be an output in the console indicating how many bursts were removed. If you choose this option you can no longer check which timestamps were effected so in case there are a lot of missing measuremnts it would be beneficial to check by hand which bursts are effected.
 
 ```{r}
-cleaned.data <- count.test(data = data , burstcount = 110 , remove = TRUE)
+cleaned_data <- count_test(data = data , burstcount = 110 , remove = TRUE)
 ```
 
 ### 4 Behaviour data import
+
+There are many ways the behaviour observation data can be organised. Some might have a file for each day and other might only have one combined file with all observations for a single individual. One issue that has to be considerd is that eobs loggers record the time in the GPS "timezone" which is not in sync with the regular radio clock that you would use during the behavour observation. To synchronise acceleration and behaviour data an additional step is necessary. For this reason I recomend saving daily behaviour observations in one file per day. 
+
+To synchronise acceleration and behaviour data a startegy that worked quite well so far was to calculate the standart deviation for each burst and then look for changes in the observed behaviour. The best indicators are changes from an active behaviour to a passive behaviour or vice versa. Such a change should also be visable in the standart deviation were passive bahviours are usually small and active behaviours hight. The lists of behaviour observations should be changed to match the changes in standart deviation. To calculate the standart deviation the function "sum_data" can be used.
+
+```{r}
+sd_sync <- sum_da
+```
 
