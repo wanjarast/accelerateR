@@ -4,7 +4,7 @@ bev_import <- function(id , date=NULL , time=NULL , timestamp = NULL , behaviour
   pat_data <- paste(id,"_behaviour[[:graph:]]*.csv", sep="")
 
   if(!is.null(data_path)){
-    temp_data <- list.files(path = data_path, pattern = pat_data)
+    temp_data <- list.files(path = data_path, pattern = pat_data , full.names = T)
   } else{
     temp_data <- list.files(pattern = pat_data)
   }

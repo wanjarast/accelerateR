@@ -22,7 +22,7 @@ time_format = dmy_hms , match = FALSE , acc_data , data_path = NULL)
 }
   \item{rounding}{Rounds the timestamp down to the desired position set in seconds. No rounding when set to 1. The default is 10 which will round the timestamp down to full 10 seconds.
 }
-  \item{time_format}{Date-time format of the originall data. Default is dmy_hms which corresponds to day.month.year_hour:minute:second
+  \item{time_format}{Date-time format of the original data. Default is dmy_hms which corresponds to day.month.year_hour:minute:second
 }
   \item{match}{Should the imported behaviour data be added to the acceleration data. Default is FALSE.
 }
