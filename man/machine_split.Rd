@@ -15,9 +15,9 @@ machine_split(data = predictors , group = "timestamp" , behaviour , train_size =
 }
   \item{behaviour}{Coulmn name with the behaviour labels.
 }
-  \item{train_size}{Proportion of data that will create the training data. Default is 0.6.
+  \item{train_size}{Proportion of data that will create the training data. Possibile values are between 0 and 1. Default is 0.6.
 }
-  \item{val_size}{Proportion of data that will create the validation data. Default is 0.2.
+  \item{val_size}{Proportion of data that will create the validation data. Possibile values are between 0 and 1. Default is 0.2.
 }
   \item{names}{Vector of names for the three data sets. Default is c("train_data","val_data","test_data")
 }

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## A user guide to prepare acceleration data for the prediction of behaviour classes
 Wanja Rast
-Version x.x 19th, August 2019
+Version x.x 26th, August 2019
 
 ###Scope of this Guide
 The purpose is to show an exemplary workflow going from the raw data to a data set that is ready to be used by any machine learning framework. The functions and their applications will not be explained in full detail in this manual. All functions, however, have detailed descriptions in their ?help pages.
@@ -92,7 +92,7 @@ sd_sync <- sum_data(data = cleaned_data , time = "timestamp" , x = "x" , y = "y"
                     stats = "sd")
 ```
 
-The "sd_sync" file can be exported or just from within R. After the behaviour observation files were synchronised with the acceleration data they can be imported into R. there are two options to to this: You can simply read in all behaviour observation files from one individual and combine them into one data.frame using "bev_import". With the "id" agrument you set the individual whose data you want to import. At this stage you are required to name all behaviour files of this individual as follows: <id>_behaviour_<subset-number>.csv. You need to save your files in the csv format. Then specify the columns that store the date and time if those are seperate in your data set or specify the timestamp column when date and time are combined in one column. Also specify the column that stores the bahviour labels. here it should not be necessary to round the timestamp but by setting it to the same value as you did for the "tag_import" function you ensure that both data sets have the exact same timestamps. You lastly need to specify the time format the data is stored in originally. By default this is "day_month_year hour:minute:second" which is passed as the argument dmy_hms. This uses the lubridate syntax for time formats. All other time formats exepted by lubridate are also applicable here.
+The "sd_sync" file can be exported or just from within R. After the behaviour observation files were synchronised with the acceleration data they can be imported into R. there are two options to to this: You can simply read in all behaviour observation files from one individual and combine them into one data.frame using "bev_import". With the "id" agrument you set the individual whose data you want to import. At this stage you are required to name all behaviour files of this individual as follows: <id>_behaviour_<subset-number>.csv. You need to save your files in the csv format. Then specify the columns that store the date and time if those are seperate in your data set or specify the timestamp column when date and time are combined in one column. Also specify the column that stores the behaviour labels. here it should not be necessary to round the timestamp but by setting it to the same value as you did for the "tag_import" function you ensure that both data sets have the exact same timestamps. You lastly need to specify the time format the data is stored in originally. By default this is "day_month_year hour:minute:second" which is passed as the argument dmy_hms. This uses the lubridate syntax for time formats. All other time formats exepted by lubridate are also applicable here.
 
 In case the file are not in the R project folder you need to specify the path to those files.
 
@@ -133,5 +133,59 @@ acc_predcitors <- sum_data(data = complete_raw_data , time = "timestamp" ,
                            x = "x" , y = "y" , z = "z" ,
                            stats = c("mean","sd","ICV","Skewness","Pitch","ODBA") , 
                            behaviour = "Bev")
+```
+
+### 6 Seperating the data set
+
+To finally train the machine learining model and validate its performance you need to seperate the full dataset into subsets. It is proposed in (Chollet, F; Allaire, J.J, 2018) to create three exclusive subsets of the full data set. Exclusive here means that no data can be part of more than one subset.
+
+You can use the function "machine_split" to create all three data sets. The function need to know which rows of data belong together, so they will not be sepereated. In the context of acceleratio data and behaviour recognition this would be the timestamp. This would not be an issue when used on the "acc_prediction" dataset since here all data that belong to the same timestamp are in one row. This function, however, could also be used on the raw acceleration data. There it would be important to not split up data from the same timestamp.
+
+The size of all subsets can be freely choosen. However, the subsets on which the model is trained should be the biggest one. You can set the size of the training data set with the "train_size" argument. This will set the proportion of number of rows from the full data set. So this value must be between 0 and 1. The argument "val_size" will determind the size of the validation data set. The third subset will be the test dataset. Its size will be 1 - train_size - val_size. In case you only want to work with the training and validation set you need to set thoses sizes so they add up to 1.
+
+This function will also respect the initial proportions of all behaviour classes and keeps these proportions in all subsets. This is in case the number of observations for each behaviour class differs.
+
+You run this function without saving the output into an object. The function will automaticlly create the three subsets in the global environment. 
+
+```{r}
+machine_split(data = acc_predcitors , group = "timestamp" , behaviour = "Bev" , train_size = 0.6 , val_size = 0.20)
+```
+
+### 7 Training the model
+
+There are a number of different machine learning algorithms that were already succesfully used for behaviour recognition (Tatler et al. 2018). The syntax for all of them is quite simmilar so I will provide an example here only for the support vector machine (SVM) fomr the package "e1071". 
+
+In a balanced data set all behaviour classes were observed the same number if times. Some algorithms offer the option the also use imbalanced data sets which entails that you need to provide the algorithm with the proportion of each behviour class. This will force the algorithm to treat errors in behavaiour classes with less observation more seriously.
+
+To use an unbalanced dataset you need to create an object with the class weights first. For the SVM the class with the highest count has to be set to one. All behaviour classes with less observation will have to have a weight greaer than one. You can calculate the weight vector like this:
+
+```{r}
+behaviour_weights <- c(max(table(train_data$Bev)) / table(train_data$Bev))
+```
+
+This is only optional and not necessary if you use a balanced data set.
+
+Before the model is trained it was proposed in (Chollet, F; Allaire, J.J, 2018) to rescale the data. This helps to bring all predictors on the same level when unscaled some predictors are magnitudes higher than others which might effect the importance of the predictors.
+
+The package "caret" provides a convenient to rescale data. Here I use the option "range" which rescaled the data between 0 and 1. 
+
+```{r}
+library(caret)
+
+preprocess_Params <- preProcess(train_data , method=c("range"))
+
+train_rescaled <- predict(preprocess_Params, train_data)
+```
+
+You should also use this "perprocess_Params" object to rescaled the other two subsets rather than rescaling them seperatly with their own "preprocess" object. 
+
+```{r}
+val_rescaled <- predict(preprocess_Params, val_data)
+test_rescaled <- predict(preprocess_Params, test_data)
+```
+
+
+```{r , eval = F}
+model.svm <- svm(x = train.rescaled , y = real.train.bev$Bev , type = "C-classification" , kernel = "radial" , class.weights = c((1/table(real.train.bev$Bev))*max(table(real.train.bev$Bev))))
 ```
 
