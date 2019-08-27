@@ -51,7 +51,7 @@ Wanja Rast
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-tag.import
+tag_import
 }
 \examples{
 ##---- NOT RUN !! ----

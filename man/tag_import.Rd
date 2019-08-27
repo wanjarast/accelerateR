@@ -33,7 +33,7 @@ Wanja Rast
 
 
 \seealso{
-bev.import
+bev_import
 }
 \examples{
 ##---- NOT RUN ----
