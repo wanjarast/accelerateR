@@ -184,8 +184,22 @@ val_rescaled <- predict(preprocess_Params, val_data)
 test_rescaled <- predict(preprocess_Params, test_data)
 ```
 
+You can than use the rescaled dataset to train any machine learnging algorithm of you choice. Here is the example for the SVM. Most machine learning algorithms got a simmilar syntax at this point. You can either train them using the formular style (Behaviour ~ predictor1 + predictor2 + ...) or provide two seperate objects like I do here. x should be the data frame holding all predictor values. It is important to exclude all coulumn that do not contain predictors. In this case here I excluded the first and second column as they contained the behaviour and the timestamp. y should be a vector containing the behaviour lables in the same order as predictor data set. In this case this is not an issue since behaviour and predictors are stored in the same data frame but you could also use behaviour labels from a seperate R object. Type and kernel are SVM specific parameters. I got the best results using tehse setting but others are available. Refer to the ?svm help file to check for mre options. You can provide the svm with the weight of the behaviour classes that we calculated before with the class.weights argument. Know that this is optional but might increase the performance of the model.   
 
 ```{r , eval = F}
-model.svm <- svm(x = train.rescaled , y = real.train.bev$Bev , type = "C-classification" , kernel = "radial" , class.weights = c((1/table(real.train.bev$Bev))*max(table(real.train.bev$Bev))))
+model.svm <- svm(x = train_rescaled[ , -c(1,2)] , y = train_rescaled$Bev , type = "C-classification" , kernel = "radial" , class.weights = behaviour_weights)
 ```
 
+### 8 Validation of the model
+
+To validate the performance of the model you need to predict the behaviour of data that the model was not trained on. For this reason you created the validation dataset. This step is identical for most machine learning algorithms. You need to specify the model you trained in the step before with the "object" argument. The "newdata" argument is supposed to be the validation dataset. In this case you should also use the rescaled data as the model was train on rescaled data as well. You also need to exclude the column for the behaviour and the timestamp. As an output you will get a vector of the predicted behaviour classes.
+
+You can then use the "pre_metrics" function to compare the predicted behaviour classes to the known behaviour classes from the observation. The output of the "pre_metrics" function is a list with two elements. The first element is a confusion matrix. This can be used to check for the confusion of different behaviour classes. The second element are the metrics. From all the metrics that could be calculated I find the recall and precision the most usefull. You can also see how well you can deal with specific behaviour classes in case you are particularily interessed in certain behaviours. 
+
+```{r}
+val_predict <- predict(object = model.svm , newdata = val_rescaled[ , -c(1,2)])
+
+pre_metrics(predicted = val_predict , expected = val_rescaled$Bev)
+```
+
+From the confusion matrix in this example you can see that overall there are some behaviour that are rarely confused with other and some were there is more confusion. Eating and sniffing are confused quite often. in this case you might consider combining them into one behaviour class called foraging as they might both be food related. This might be an option when the behaviour classes are ecologicly close to each other which might not always be the case. Than you could also consider to drop one of the classes. Especially if it was a rare behaviour. A third option would be to tune your model. You could change the machine learning algorithm specific parameters or even include new predictors or exclude some predictors and check with the validation dataset again if the performance improves. The latter option would be the prefered one but sometimes behaviours are just to simmilar in terms of their acceleration patterns that machine learning can not distinguish them. 
