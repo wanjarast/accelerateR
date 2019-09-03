@@ -23,7 +23,7 @@ bev_import <- function(id , date=NULL , time=NULL , timestamp = NULL , behaviour
   }
 
   if(isTRUE(match)){
-    combined <- left_join(data , behaviour_data , by = "timestamp")%>%
+    combined <- left_join(acc_data , behaviour_data , by = "timestamp")%>%
       dplyr::select(. , timestamp , x,y,z,behaviour)%>%
       filter(. , complete.cases(.))
     return(combined)
