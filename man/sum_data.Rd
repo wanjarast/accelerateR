@@ -1,5 +1,5 @@
-\name{sum.data}
-\alias{sum.data}
+\name{sum_data}
+\alias{sum_data}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Summary statistics from e-obs raw acceleration data
 %%  ~~function to do ... ~~

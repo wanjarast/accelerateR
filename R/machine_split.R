@@ -1,6 +1,8 @@
 machine_split <- function(data , group = "timestamp" , behaviour , train_size , val_size ,
                           seed = 142 , names = c("train_data","val_data","test_data")){
   set.seed(seed)
+  train_size <- round(x = train_size , digits = 2)
+  val_size <- round(x = val_size , digits = 2)
   if(train_size + val_size > 1){
     stop("train_size + val_size have to be smaller than 1")
   }
@@ -14,7 +16,7 @@ machine_split <- function(data , group = "timestamp" , behaviour , train_size , 
     dplyr::sample_frac( . , size = train_size)%>%
     dplyr::ungroup(.)%>%
     dplyr::slice(. , sample(nrow(.)))%>%
-    tidyr::unnest(.)
+    tidyr::unnest(. , cols = c(data))
 
   remaining <- nested_data[!nested_data[[group]] %in% train_data[[group]], ]
 
@@ -25,13 +27,13 @@ machine_split <- function(data , group = "timestamp" , behaviour , train_size , 
     dplyr::sample_frac( . , size = val_size_calc)%>%
     dplyr::ungroup(.)%>%
     dplyr::slice(. , sample(nrow(.)))%>%
-    tidyr::unnest(.)
+    tidyr::unnest(. , cols = c(data))
 
   if(train_size + val_size < 1){
     test_data <- remaining[!(remaining[[group]] %in% val_data[[group]]), ]%>%
       dplyr::ungroup(.)%>%
       dplyr::slice(. , sample(nrow(.)))%>%
-      tidyr::unnest(.)
+      tidyr::unnest(. , cols = c(data))
 
     assign(names[3] , test_data , envir = .GlobalEnv)
   }
