@@ -20,12 +20,13 @@ pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 }
 \details{None of the provided column names should have a "-" in the name otherwise the function will not work.
 
-Takes a vector of predicted behaviours and compares it to a vector of known behaviours. A confusion matrix is computed. The recall and precision are computed after Bidder et al. 2014. In cases were unknown behaviours are considered it computes the proportion of unknown behaviours in contrast to the total number of behaviours recoreded.
+Takes a vector of predicted behaviours and compares it to a vector of known behaviours. A confusion matrix is computed. The recall and precision are computed after Powers et al. 2011. In cases were unknown behaviours are considered it computes the proportion of unknown behaviours in contrast to the total number of behaviours recoreded.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output is a list:
   \item{confusion_matrix}{A confusion matrix from the predicted and expected behaviours of class "table"}
-  \item{metrics}{Recall and precision for every behaviour class in a matrix}
+  \item{metrics}{Recall, precision and accuracy for every behaviour class in a matrix}
+  \item{kappa}{Cohen's kappa value}
   \item{uncertain_predictions}{proportion of uncertain predictions in relation to to total number of redictions as a numeric value}
 %%  ~Describe the value returned
 %%  If it is a LIST, use
@@ -33,7 +34,7 @@ Takes a vector of predicted behaviours and compares it to a vector of known beha
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 }
-\references{Bidder, O. R., Campbell, H. A., Gomez-Laich, A., Urge, P., Walker, J., Cai, Y., Wilson, R. P. (2014). Love Thy Neighbour: Automatic Animal Behavioural Classification of Acceleration Data Using the K-Nearest Neighbour Algorithm. PLoS ONE, 9(2), e88609. doi:10.1371/journal.pone.0088609
+\references{Powers, David Martin. "Evaluation: from precision, recall and F-measure to ROC, informedness, markedness and correlation." (2011).
 %% ~put references to the literature/web site here ~
 }
 \author{Wanja Rast
