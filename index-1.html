@@ -1,0 +1,34 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Unbekannt </title></head><body>
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<h1 id="accelerater">accelerateR</h1>
+<p>accelerateR offers a framework for acceleration data analysis. It was developed for data recoreded in high sample frequency bursts. The starting point would be accelerationdata that was stored in the <a href="https://www.movebank.org">movebank</a>. The downloaded data can be transformed with this package to become usable in R which also creates the correct data structure for all functions of accelerateR. The most important function sum.data will calculate summary statistics to prepare the acceleration data to be used for any maschine learning approach.</p>
+<h2 id="installation">Installation</h2>
+<p>You can install accelerateR from github with:</p>
+<p>``` r</p>
+<h1 id="installpackagesdevtools">install.packages("devtools")</h1>
+<p>devtools::install_github("wanjarast/accelerateR")
+```</p>
+<h2 id="functions">Functions</h2>
+<p>Transform the moveank data into a structure, that is suitable for R</p>
+<p><code>r
+move.trans(data =  ... , time = "..." , burst = ... , naxes = 3)</code></p>
+<p>Check for data integrety. All burst are supposed to have the same amount of measurments. This function will report all bursts were this asumtion is violated. The output can be used to filter aou these bursts.</p>
+<p><code>r
+count_test(data = ... , burstcount = ... , time = "timestamp")</code></p>
+<p>Calculate summary statistics for every burst separatly. This works for data with one, two or three axes. A number of summary statistic parameters can be choosen to be calculated which can be specified with the stats argument. It is possible to shrink the measurment intevall to only analyse smaller parts of every bursts through specification of the windowstart and burstcount argument.</p>
+<p>Extra information can be added to the output data frame.</p>
+<p><code>r
+sum.data(data = ... , time = "..." , windowstart = 1 , burstcount = NULL, 
+         x = "..." , y = NULL , z = NULL , stats , 
+        IntDur = NA , ID = NA , Tag.ID = NA , frequency = NA , sex = NA)</code></p>
+<p>Creates a confusion matrix for a model evaluation. Also provides the precission and recall (after Bidder et al. 2014).</p>
+<p><code>r
+pre_metrics(predicted = ... , expected = ... , uncertain = NULL)</code></p>
+<p>Plots the absence or present of one or more target behaviours in an actogram style.</p>
+<p><code>r
+acto(data = ... , time = "..." , behaviour = "..." , target.bev = ... , daily = FALSE , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)</code></p>
+<p>Plots the Overall dynamic body acceleration (ODBA) in an actogram style.</p>
+<p><code>r
+acto.odba(data = ... , time = "..." , ODBA = "ODBA" , cutoff = 1 , night.shift = FALSE , sun = F , suncolor = "red" , timezone = "UTC" , long = ... , lat = ...)</code></p>
+</body></html>
