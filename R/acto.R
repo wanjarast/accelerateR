@@ -107,13 +107,13 @@ acto <- function(data , time , behaviour , target_bev , daily = FALSE ,
         scale_color_manual("Status", values = c("1" = "black" , "0" = "white"))+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "15:00" , "18:00" , "21:00" , "00:00" , "03:00" , "06:00" , "09:00" , "" ))
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])
     }
     else if(daily != T & sun == T){
       basis+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "15:00" , "18:00" , "21:00" , "00:00" , "03:00" , "06:00" , "09:00" , "" ))+
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
         geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
@@ -124,7 +124,7 @@ acto <- function(data , time , behaviour , target_bev , daily = FALSE ,
       basis+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1) , labels = levels(data$Datum))+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "15:00" , "18:00" , "21:00" , "00:00" , "03:00" , "06:00" , "09:00" , "" ))+
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
         geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
@@ -136,7 +136,7 @@ acto <- function(data , time , behaviour , target_bev , daily = FALSE ,
         scale_color_manual("Status", values = c("1" = "black" , "0" = "white"))+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1) , labels = levels(data$Datum))+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "15:00" , "18:00" , "21:00" , "00:00" , "03:00" , "06:00" , "09:00" , "" ))
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])
     }
   }
 
@@ -145,20 +145,20 @@ acto <- function(data , time , behaviour , target_bev , daily = FALSE ,
       basis+
         scale_color_manual("Status", values = c("1" = "black" , "0" = "white"))+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1) , labels = levels(data$Datum))
     }
     else if(daily != T & sun != T){
       basis+
         scale_color_manual("Status", values = c("1" = "black" , "0" = "white"))+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
         scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])
     }
     else if(daily == T & sun == T){
       basis+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
         geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,
@@ -169,7 +169,7 @@ acto <- function(data , time , behaviour , target_bev , daily = FALSE ,
     else if(daily != T & sun == T){
       basis+
         scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                         labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
+                         labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
         geom_path(data = data[data$sunrise %in% data$Uhrzeit,] , aes(x = sunrise , y = date_numeric ,
                                                                      color = "sunrise/sunset" , group = 1),size = 1.5 , alpha = 0.7)+
         geom_path(data = data[data$sunset %in% data$Uhrzeit,] , aes(x = sunset , y = date_numeric ,

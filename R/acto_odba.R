@@ -103,7 +103,7 @@ acto_odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 ,
       scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])+
 
       scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                       labels = c("" , "15:00" , "18:00" , "21:00" , "00:00" , "03:00" , "06:00" , "09:00" , "" ))+
+                       labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
       scale_fill_gradient(low = "white", high = "black")+
       ylab(label = "date")+
       xlab(label = "Time of the day")+
@@ -124,7 +124,7 @@ acto_odba <- function(data , time = "timestamp" , ODBA = "ODBA" , cutoff = 1 ,
       theme(axis.line = element_line(colour = "black", size = 0.5, linetype = "solid"))+
       scale_y_reverse(breaks = seq(1 , length(levels(data$Datum)) , 1)[unique_date] , labels = levels(data$Datum)[unique_date])+
       scale_x_discrete(breaks = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))],
-                       labels = c("" , "03:00" , "06:00" , "09:00" , "12:00" , "15:00" , "18:00" , "21:00" , "" ))+
+                       labels = sort(unique(data$Uhrzeit))[round(seq(1 , length(unique(data$Uhrzeit)) , length.out = 9))])+
       scale_fill_gradient(low = "white", high = "black")+
       ylab(label = "date")+
       xlab(label = "Time of the day")+
