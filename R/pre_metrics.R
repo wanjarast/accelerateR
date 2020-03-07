@@ -53,7 +53,7 @@ pre_metrics = function(predicted , expected , uncertain = NULL){
   kappa <- (observed_accuray - expected_accuray) / (1 - expected_accuray)
 
   if(!(is.null(uncertain))){
-    return(list(confusion_matrix = conf_table_print , metrics = result , kappa = kappa , uncertain_predictions = others))
+    return(list(confusion_matrix = conf_table_print , metrics = result , kappa = kappa , uncertain_predictions = (others / total_n)))
   }
   if(is.null(uncertain)){
     return(list(confusion_matrix = conf_table_print , metrics = result , kappa = kappa))
