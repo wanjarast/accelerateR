@@ -39,7 +39,7 @@ move_trans <- function(file = NULL,object = NULL,time="timestamp",acc="eobs:acce
     char_list <- char_list[names(char_list) %in% names(counts)[counts == burst*3]]
 
     # reshapes each list into a matrix -> output is still a list
-    output <- lapply(char_list , matrix , ncol=3)%>%
+    output <- lapply(char_list , matrix , ncol=3 , byrow = T)%>%
       # turns each list element matrix into a data.table
       lapply(. , as.data.table)%>%
       # bind all data.tables into one data.table
@@ -76,7 +76,7 @@ move_trans <- function(file = NULL,object = NULL,time="timestamp",acc="eobs:acce
     char_list <- char_list[names(char_list) %in% names(counts)[counts == burst*2]]
 
     # reshapes each list into a matrix -> output is still a list
-    output <- lapply(char_list , matrix , ncol=2)%>%
+    output <- lapply(char_list , matrix , ncol=2 , byrow = T)%>%
       # turns each list element matrix into a data.table
       lapply(. , as.data.table)%>%
       # bind all data.tables into one data.table
@@ -112,7 +112,7 @@ move_trans <- function(file = NULL,object = NULL,time="timestamp",acc="eobs:acce
     char_list <- char_list[names(char_list) %in% names(counts)[counts == burst*1]]
 
     # reshapes each list into a matrix -> output is still a list
-    output <- lapply(char_list , matrix , ncol=1)%>%
+    output <- lapply(char_list , matrix , ncol=1 , byrow = T)%>%
       # turns each list element matrix into a data.table
       lapply(. , as.data.table)%>%
       # bind all data.tables into one data.table
