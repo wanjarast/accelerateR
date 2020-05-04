@@ -37,10 +37,10 @@ pre_metrics = function(predicted , expected , uncertain = NULL){
     }
     colsum <- sum(conf_table[ , colnames(conf_table) == i])
     if(!(is.null(uncertain))){
-      true_negatives <- sum(conf_table[rownames(conf_table) != i , colnames(conf_table) != i])
+      true_negatives <- sum(conf_table[rownames(conf_table) != i , colnames(conf_table) != i]) + sum(other_table[names(other_table) != i])
     }
     else{
-      true_negatives <- sum(conf_table[rownames(conf_table) != i , colnames(conf_table) != i]) + sum(other_table[names(other_table) != i])
+      true_negatives <- sum(conf_table[rownames(conf_table) != i , colnames(conf_table) != i])
     }
 
     result[rownames(result) == "recall" , colnames(result) == i] <- correct / colsum
