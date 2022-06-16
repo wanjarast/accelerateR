@@ -1,130 +1,80 @@
-move_trans <- function(file = NULL,object = NULL,time="timestamp",acc="eobs:accelerations-raw",burst,naxes=3){
+move_trans = function(data = NULL, path = NULL, timestamp = "timestamp", acc = "eobs:accelerations-raw",
+         id = "individual-local-identifier", sample_frequency = "eobs:acceleration-sampling-frequency-per-axis" ,
+         naxes = 3, no_cores = 1){
 
-  if(!is.null(file)){
-    data <- data.table::fread(file , header = T)
+  if(!is.null(path)){
+    data <- data.table::fread(path , header = T)
   }
 
-  if(!is.null(object)){
-    data <- object
+  else{
+    data <- data.table::copy(data)
   }
 
-  data <- setDT(data)
+  rearrange_func <- function(data, n, naxes, acc, id, sample_frequency){
 
-  names(data)[names(data) == acc] <- "eobs_accelerations_raw"
-  names(data)[names(data) == time] <- "timestamp"
+    acc_data <- data[n, ..acc]
 
-  data$eobs_accelerations_raw <- as.character(data$eobs_accelerations_raw)
+    acc_data <- strsplit(as.character(acc_data)," ")%>%
+      unlist(.)%>%
+      as.numeric(.)
 
+    if(naxes == 3){
+      x <- acc_data[seq(1 , length(acc_data) , 3)]
+      y <- acc_data[seq(2 , length(acc_data) , 3)]
+      z <- acc_data[seq(3 , length(acc_data) , 3)]
 
-
-
-  if(naxes == 3){
-    # splits the raw acceleration character column into seperate values
-    # sperarates by timestamp and saves each timestamp in a list element
-    char_split <- data[ , .(lapply(X = strsplit(as.character(eobs_accelerations_raw)," ") , as.numeric)) , by = timestamp]
-
-    # extracts only the list elements
-    char_list <- char_split$V1
-
-    # names the list elements according to the original timestamps
-    names(char_list) <- as.character(char_split$timestamp)
-
-    # counts the number of measurments for all three axes for each burst
-    counts <- unlist(lapply(char_list,length))
-
-    # saves all measurment counts that differ from the expacted
-    other_sizes <- unique(counts)[unique(counts) != burst*3]/3
-
-    # removes all bursts with a different number of measurments than expected
-    char_list <- char_list[names(char_list) %in% names(counts)[counts == burst*3]]
-
-    # reshapes each list into a matrix -> output is still a list
-    output <- lapply(char_list , matrix , ncol=3 , byrow = T)%>%
-      # turns each list element matrix into a data.table
-      lapply(. , as.data.table)%>%
-      # bind all data.tables into one data.table
-      rbindlist(l = . ,idcol = T)
-
-    # renames the columns in the output data.table
-    names(output) <- c("timestamp","x","y","z")
-    if(length(other_sizes) != 0){
-      # puts out a warning if the data set contains bursts of differt sizes
-      warning("Found burst of length ", paste(other_sizes , collapse = " , ")  , call. = F)
+      result <- data.table(x = x , y = y , z = z)
     }
-    return(output)
 
-  }
+    if(naxes == 2){
+      x <- acc_data[seq(1 , length(acc_data) , 2)]
+      y <- acc_data[seq(2 , length(acc_data) , 2)]
 
-  if(naxes == 2){
-    # splits the raw acceleration character column into seperate values
-    # sperarates by timestamp and saves each timestamp in a list element
-    char_split <- data[ , .(lapply(X = strsplit(as.character(eobs_accelerations_raw)," ") , as.numeric)) , by = timestamp]
-
-    # extracts only the list elements
-    char_list <- char_split$V1
-
-    # names the list elements according to the original timestamps
-    names(char_list) <- as.character(char_split$timestamp)
-
-    # counts the number of measurments for all three axes for each burst
-    counts <- unlist(lapply(char_list,length))
-
-    # saves all measurment counts that differ from the expacted
-    other_sizes <- unique(counts)[unique(counts) != burst*2]/2
-
-    # removes all bursts with a different number of measurments than expected
-    char_list <- char_list[names(char_list) %in% names(counts)[counts == burst*2]]
-
-    # reshapes each list into a matrix -> output is still a list
-    output <- lapply(char_list , matrix , ncol=2 , byrow = T)%>%
-      # turns each list element matrix into a data.table
-      lapply(. , as.data.table)%>%
-      # bind all data.tables into one data.table
-      rbindlist(l = . ,idcol = T)
-
-    # renames the columns in the output data.table
-    names(output) <- c("timestamp","x","y")
-    if(length(other_sizes) != 0){
-      # puts out a warning if the data set contains bursts of differt sizes
-      warning("Found burst of length ", paste(other_sizes , collapse = " , ")  , call. = F)
+      result <- data.table(x = x , y = y)
     }
-    return(output)
 
-  }
-  if(naxes == 1){
-    # splits the raw acceleration character column into seperate values
-    # sperarates by timestamp and saves each timestamp in a list element
-    char_split <- data[ , .(lapply(X = strsplit(as.character(eobs_accelerations_raw)," ") , as.numeric)) , by = timestamp]
+    if(naxes == 1){
+      x <- acc_data
 
-    # extracts only the list elements
-    char_list <- char_split$V1
-
-    # names the list elements according to the original timestamps
-    names(char_list) <- as.character(char_split$timestamp)
-
-    # counts the number of measurments for all three axes for each burst
-    counts <- unlist(lapply(char_list,length))
-
-    # saves all measurment counts that differ from the expacted
-    other_sizes <- unique(counts)[unique(counts) != burst*1]/1
-
-    # removes all bursts with a different number of measurments than expected
-    char_list <- char_list[names(char_list) %in% names(counts)[counts == burst*1]]
-
-    # reshapes each list into a matrix -> output is still a list
-    output <- lapply(char_list , matrix , ncol=1 , byrow = T)%>%
-      # turns each list element matrix into a data.table
-      lapply(. , as.data.table)%>%
-      # bind all data.tables into one data.table
-      rbindlist(l = . ,idcol = T)
-
-    # renames the columns in the output data.table
-    names(output) <- c("timestamp","x")
-    if(length(other_sizes) != 0){
-      # puts out a warning if the data set contains bursts of differt sizes
-      warning("Found burst of length ", paste(other_sizes , collapse = " , ")  , call. = F)
+      result <- data.table(x = x)
     }
-    return(output)
 
+    result[, timestamp := data[n, ..timestamp]]
+
+    result[, id := unlist(data[n, ..id])]
+
+    result[, sample_frequency := data[n, ..sample_frequency]]
+
+    result[, burst_size := length(x)]
+
+    return(result)
   }
+
+  if(no_cores == 1){
+    result <- foreach(n = 1:nrow(data), .combine = rbind,
+                      .packages = c("accelerateR")) %do% rearrange_func(data, n,
+                                                                        naxes = naxes, acc = acc, id = id,
+                                                                        sample_frequency = sample_frequency)
+  }
+
+  else{
+    # Initiate cluster
+    cl <- makeCluster(no_cores)
+    registerDoParallel(cl)
+
+    result_list <- foreach(n = 1:nrow(data),
+                           .packages = c("accelerateR")) %dopar% rearrange_func(data, n,
+                                                                                naxes = naxes, acc = acc, id = id,
+                                                                                sample_frequency = sample_frequency)
+
+    # close the cluster
+    stopCluster(cl)
+
+    result <- rbindlist(result_list)
+  }
+
+
+  message("Found burst of length ", paste(unique(result$burst_size) , collapse = " , "))
+
+  return(result)
 }

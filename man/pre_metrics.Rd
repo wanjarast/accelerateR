@@ -21,6 +21,7 @@ pre_metrics(predicted = ... , expected = ... , uncertain = NULL)
 \details{None of the provided column names should have a "-" in the name otherwise the function will not work.
 
 Takes a vector of predicted behaviours and compares it to a vector of known behaviours. A confusion matrix is computed. The recall and precision are computed after Powers et al. 2011. In cases were unknown behaviours are considered it computes the proportion of unknown behaviours in contrast to the total number of behaviours recoreded.
+In cases where the model performes badly and one or more classes are not predicted, the function will only output the confusion matrix.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{The output is a list:

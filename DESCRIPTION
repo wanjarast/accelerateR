@@ -2,10 +2,10 @@ Package: accelerateR
 Type: Package
 Title: Process acceleration data
 Version: 1.1.1
-Date: 2019-02-01
+Date: 2021-12-29
 Authors@R: c(person("Rast", "Wanja" , role = "aut"))
 Maintainer: Wanja Rast <wanja.home@t-online.de>
-Depends: R (>= 3.5.0), dplyr, e1071, lubridate, ggplot2, maptools, data.table, hms
+Depends: R (>= 3.5.0), dplyr, e1071, lubridate, ggplot2, maptools, data.table, hms, doParallel
 Description: Import acceleration data from Movebank, check data integrety, calculate summary statistics and produce actograms.
 Encoding: UTF-8
 LazyData: true
